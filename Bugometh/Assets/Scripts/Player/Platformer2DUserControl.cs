@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-//namespace UnityStandardAssets._2D
-//{
 [RequireComponent(typeof (PlatformerCharacter2D))]
 public class Platformer2DUserControl : MonoBehaviour
 {
@@ -44,4 +42,3 @@ public class Platformer2DUserControl : MonoBehaviour
         }
     }
 }
-//}
