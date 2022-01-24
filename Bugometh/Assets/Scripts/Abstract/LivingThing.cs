@@ -31,7 +31,12 @@ public class LivingThing : MonoBehaviour
     {
         Debug.Log("creature was killed");
     }
-    
+
+    public virtual void OnGameStateGhanged(GameState gameState)
+    {
+        able_to_move = gameState == GameState.Gameplay;
+    }
+
     public virtual Vector2Int GetHealthStats()
     {
         return new Vector2Int(CurrentHP, MaxHP);
