@@ -15,7 +15,7 @@ public class TrialMovement : MonoBehaviour
     void Update()
     {
         if (Input.GetAxis("Horizontal") != 0)
-            animator.SetFloat("Speed", 0.2f);
+            animator.SetFloat("Speed", 0.11f);
         else
             animator.SetFloat("Speed", 0);
     }
