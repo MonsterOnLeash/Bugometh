@@ -11,6 +11,11 @@ public class PlayerControls : MonoBehaviour
     public float input;
     public float jump;
     public float shoot;
+    public float jumpTime;
+    public float jumpTimeCounter;
+    public bool isJumping;
+    public float fallMultiplier = 1.5f;
+    public float lowJumpMultiplier = 1;
 
     public float jumpForce;
     public bool isGrounded;
@@ -22,6 +27,8 @@ public class PlayerControls : MonoBehaviour
     public Transform attackPoint;
     public float attackRange;
     public int attackPower;
+    public float coyoteTime;
+    public float coyoteTimeCounter;
 
     public Rigidbody2D rb;
     public BoxCollider2D bc;
@@ -33,18 +40,25 @@ public class PlayerControls : MonoBehaviour
     private void Awake()
     {
         facingRight = true;
-        jumpForce = 420;
+        isJumping = false;
+        jumpForce = 5.3f;
         speed = 4;
         attackRange = 0.5f;
+        jumpTime = 0.37f;
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         bc = GetComponent<BoxCollider2D>();
+        jumpTimeCounter = jumpTime;
+        coyoteTimeCounter = coyoteTime;
+        checkRadius = 0.15f;
+        coyoteTime = 0.1f;
     }
 
     // Update is called once per frame
     void Update()
     {
         input = playerInput.actions["Move"].ReadValue<float>();
+        jump = playerInput.actions["Jump"].ReadValue<float>();
 
         if (input != 0 && isGrounded)
         {
@@ -65,14 +79,37 @@ public class PlayerControls : MonoBehaviour
         transform.Translate(new Vector2(input * speed * Time.deltaTime, 0));
 
         if (playerInput.actions["Shoot"].triggered)
-        {
             Attack();
+
+        if (isGrounded)
+            coyoteTimeCounter = coyoteTime;
+        else
+            coyoteTimeCounter -= Time.deltaTime;
+
+        if (playerInput.actions["Jump"].triggered && coyoteTimeCounter > 0)
+        {
+            isJumping = true;
+            jumpTimeCounter = jumpTime;
+            rb.velocity = Vector2.up * jumpForce;
         }
 
-        if (playerInput.actions["Jump"].triggered && isGrounded)
+        if (jump == 1 && isJumping)
         {
-            Debug.Log("Jump");
-            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            if (jumpTimeCounter > 0)
+            {
+                rb.velocity = Vector2.up * jumpForce;
+                jumpTimeCounter -= Time.deltaTime;
+            }
+            else
+            {
+                isJumping = false;
+            }
+        }
+
+        if (playerInput.actions["JumpRelease"].triggered)
+        {
+            coyoteTimeCounter = 0;
+            isJumping = false;
         }
 
         if ((!facingRight && input > 0) || (facingRight && input < 0))
