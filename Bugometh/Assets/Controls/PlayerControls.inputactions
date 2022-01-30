@@ -110,6 +110,12 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "GameMaster",
+            "id": "5514d74b-e5be-4203-95ef-5bf17e319fac",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": [
