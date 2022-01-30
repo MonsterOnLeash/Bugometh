@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameMaster : MonoBehaviour
 {
     private GameObject pause_menu;
-    public static void KillPlayer(PlayerBasic player)
+    private GameObject hp_bar;
+    private PlayerInput playerInput;
+    public static void KillPlayer(GameObject player)
     {
         Destroy(player);
         Debug.Log("you died");
@@ -40,12 +43,14 @@ public class GameMaster : MonoBehaviour
     {
         pause_menu = GameObject.FindGameObjectWithTag("PauseMenu");
         pause_menu.SetActive(false);
+        playerInput = GetComponent<PlayerInput>();
+        hp_bar = GameObject.FindGameObjectWithTag("HPBar");
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Escape();
-        }
+        //if (playerInput.actions["Escape"].triggered)
+        //{
+        //    Escape();
+        //}
     }
 }
