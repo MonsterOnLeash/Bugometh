@@ -9,9 +9,17 @@ public class SpiderController : Enemy
     public float checkRadius;
     public LayerMask whatIsWall;
 
-    private float since_last_strike; // time in seconds since last strike
+    public LayerMask whatToAttack;
+    public float StrikeRange;
+    public float TriggerRange;
+    public float ThowbackDuration; // how much time will the player be thown back after stike
+    public float ThrowbackDistance;
     public float TimeBetweenStrikes; // time in seconds between strikes, if player is within range for a long time
-    private bool is_in_conatact;
+
+    private float since_last_strike; // time in seconds since last strike
+    private bool is_thowing_back = false; // shows if we are trying to thow player back or not
+    private float thowback_power;
+
     private PlayerBasic player;
 
 
@@ -21,22 +29,6 @@ public class SpiderController : Enemy
         Vector2 Scaler = transform.localScale;
         Scaler.x *= -1;
         transform.localScale = Scaler;
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            is_in_conatact = true;
-            player = collision.gameObject.GetComponent<PlayerBasic>();
-        }
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            since_last_strike = float.MaxValue;
-            is_in_conatact = false;
-        }
     }
     // Start is called before the first frame update
     private void Awake()
@@ -54,10 +46,6 @@ public class SpiderController : Enemy
     // Update is called once per frame
     private void Update()
     {
-        //if (Physics2D.OverlapBox(touchPoint.position, new Vector2(2 * checkRadius, 2 * checkRadius), whatIsWall.value))
-        //{
-        //    Flip();
-        //}
         if (Physics2D.OverlapCircle(touchPoint.position, checkRadius, whatIsWall))
         {
             Flip();
@@ -65,16 +53,37 @@ public class SpiderController : Enemy
         if (able_to_move)
         {
             transform.Translate(new Vector2(direction * speed * Time.deltaTime, 0));
-        }
-        if (is_in_conatact)
-        {
-            if (since_last_strike >= TimeBetweenStrikes)
+            Collider2D collider = Physics2D.OverlapCircle(transform.position, StrikeRange, whatToAttack);
+            if (collider)
             {
-                player.DamageFixed(1);
-                since_last_strike = 0;
-            } else if (since_last_strike < float.MaxValue)
+                if ((player = collider.gameObject.GetComponent<PlayerBasic>()) && since_last_strike >= TimeBetweenStrikes)
+                {
+                    player.DamageFixed(1);
+                    since_last_strike = 0;
+                    thowback_power = ThrowbackDistance / ThowbackDuration;
+                    is_thowing_back = true;
+                }
+                else if (since_last_strike < float.MaxValue)
+                {
+                    since_last_strike += Time.deltaTime;
+                }
+            }
+            else if (since_last_strike < float.MaxValue)
             {
                 since_last_strike += Time.deltaTime;
+            }
+            if (is_thowing_back && collider && since_last_strike < ThowbackDuration)
+            {
+                Vector2 initial_vector = collider.gameObject.transform.position - transform.position; // discarding z coordinate here
+                if (initial_vector.magnitude < StrikeRange + 0.4) //0.4f is approximately half the hight of our dude
+                {
+                    collider.gameObject.transform.Translate(initial_vector.normalized * Time.deltaTime * thowback_power);
+                    gameObject.transform.Translate(new Vector2(initial_vector.normalized.x * (-1) * Time.deltaTime * thowback_power, 0));
+                }
+                else
+                {
+                    is_thowing_back = false;
+                }
             }
         }
     }

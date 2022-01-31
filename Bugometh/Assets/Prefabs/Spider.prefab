@@ -105,7 +105,14 @@ MonoBehaviour:
   whatIsWall:
     serializedVersion: 2
     m_Bits: 8
-  TimeBetweenStrikes: 0.5
+  whatToAttack:
+    serializedVersion: 2
+    m_Bits: 128
+  StrikeRange: 1
+  TriggerRange: 3
+  ThowbackDuration: 0.1
+  ThrowbackDistance: 1
+  TimeBetweenStrikes: 2
 --- !u!58 &2108434376623793423
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class SpidersSpawner : MonoBehaviour
 {
     private float since_last_spawn;
     public float TimeBetweenSpawns;
-    public GameObject SpiderPprefab;
+    public GameObject SpiderPrefab;
     private void Start()
     {
         since_last_spawn = float.MaxValue;
@@ -16,7 +16,7 @@ public class SpidersSpawner : MonoBehaviour
     {
         if (since_last_spawn >= TimeBetweenSpawns)
         {
-            GameObject new_spider = Instantiate(SpiderPprefab, transform.position, Quaternion.identity);
+            GameObject new_spider = Instantiate(SpiderPrefab, transform.position, Quaternion.identity);
             new_spider.SetActive(true);
             since_last_spawn = 0;
         }

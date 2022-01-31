@@ -27691,7 +27691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 578408869}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: GroundChecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38362,7 +38362,7 @@ GameObject:
   - component: {fileID: 1308852606}
   - component: {fileID: 1308852607}
   - component: {fileID: 1308852608}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38499,7 +38499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TimeBetweenSpawns: 5
-  SpiderPprefab: {fileID: 2108434376623793410, guid: 4d0045fb6c039184aa3c8a990b8acfa0, type: 3}
+  SpiderPrefab: {fileID: 2108434376623793410, guid: 4d0045fb6c039184aa3c8a990b8acfa0, type: 3}
 --- !u!4 &1471709483
 Transform:
   m_ObjectHideFlags: 0
@@ -38512,7 +38512,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1488040750
 GameObject:
@@ -38569,7 +38569,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1533642387}
   - component: {fileID: 1533642388}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Point Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
