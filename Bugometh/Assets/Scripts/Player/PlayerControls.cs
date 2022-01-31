@@ -76,7 +76,7 @@ public class PlayerControls : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
 
         //rb.velocity = new Vector2(input * speed, rb.velocity.y);
-        transform.Translate(new Vector2(input * speed * Time.deltaTime, 0));
+        //transform.Translate(new Vector2(input * speed * Time.deltaTime, 0));
 
         if (playerInput.actions["Shoot"].triggered)
             Attack();
@@ -111,6 +111,8 @@ public class PlayerControls : MonoBehaviour
             coyoteTimeCounter = 0;
             isJumping = false;
         }
+
+        rb.velocity = new Vector2(input * speed, rb.velocity.y);
 
         if ((!facingRight && input > 0) || (facingRight && input < 0))
             Flip();
