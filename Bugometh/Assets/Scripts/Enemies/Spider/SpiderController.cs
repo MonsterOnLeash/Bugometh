@@ -6,22 +6,22 @@ public class SpiderController : Enemy
 {
     private float direction;
     public Transform touchPoint;
+    public Transform edgePoint;
     public float checkRadius;
     public LayerMask whatIsWall;
+    public LayerMask whatIsGround;
 
     public LayerMask whatToAttack;
-    public float StrikeRange;
-    public float TriggerRange;
-    public float ThowbackDuration; // how much time will the player be thown back after stike
-    public float ThrowbackDistance;
-    public float TimeBetweenStrikes; // time in seconds between strikes, if player is within range for a long time
+    public float thowbackDuration; // how much time will the player be thown back after stike
+    public float xThrowbackForce; // throwback force on x axis
+    public float yThrowbackForce; // throwback force on y axis
+    public float timeBetweenStrikes; // time in seconds between strikes, if player is within range for a long time
 
     private float since_last_strike; // time in seconds since last strike
-    private bool is_thowing_back = false; // shows if we are trying to thow player back or not
-    private float thowback_power;
+    private bool is_in_contact;
 
     private PlayerBasic player;
-
+    private GameObject player_obj;
 
     void Flip()
     {
@@ -30,7 +30,22 @@ public class SpiderController : Enemy
         Scaler.x *= -1;
         transform.localScale = Scaler;
     }
-    // Start is called before the first frame update
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            player_obj = collision.gameObject;
+            player = collision.gameObject.GetComponent<PlayerBasic>();
+            is_in_contact = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            is_in_contact = false;
+        }
+    }
     private void Awake()
     {
         able_to_move = true;
@@ -42,48 +57,40 @@ public class SpiderController : Enemy
             Flip();
         }
         since_last_strike = float.MaxValue;
+        is_in_contact = false;
     }
     // Update is called once per frame
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Physics2D.OverlapCircle(touchPoint.position, checkRadius, whatIsWall))
-        {
-            Flip();
-        }
         if (able_to_move)
         {
-            transform.Translate(new Vector2(direction * speed * Time.deltaTime, 0));
-            Collider2D collider = Physics2D.OverlapCircle(transform.position, StrikeRange, whatToAttack);
-            if (collider)
+            // flip if hit the wall
+            if (Physics2D.OverlapCircle(touchPoint.position, checkRadius, whatIsWall))
             {
-                if ((player = collider.gameObject.GetComponent<PlayerBasic>()) && since_last_strike >= TimeBetweenStrikes)
-                {
-                    player.DamageFixed(1);
-                    since_last_strike = 0;
-                    thowback_power = ThrowbackDistance / ThowbackDuration;
-                    is_thowing_back = true;
-                }
-                else if (since_last_strike < float.MaxValue)
-                {
-                    since_last_strike += Time.deltaTime;
-                }
+                Flip();
             }
-            else if (since_last_strike < float.MaxValue)
+
+            // flip if got to the edge
+            if (Physics2D.OverlapCircle(edgePoint.position, checkRadius, whatIsGround) == null)
+            {
+                Flip();
+            }
+
+            // move the spider
+            transform.Translate(new Vector2(direction * speed * Time.deltaTime, 0));
+            
+            if (since_last_strike < float.MaxValue)
             {
                 since_last_strike += Time.deltaTime;
             }
-            if (is_thowing_back && collider && since_last_strike < ThowbackDuration)
+            // strike player
+            if (is_in_contact && since_last_strike >= timeBetweenStrikes)
             {
-                Vector2 initial_vector = collider.gameObject.transform.position - transform.position; // discarding z coordinate here
-                if (initial_vector.magnitude < StrikeRange + 0.4) //0.4f is approximately half the hight of our dude
-                {
-                    collider.gameObject.transform.Translate(initial_vector.normalized * Time.deltaTime * thowback_power);
-                    gameObject.transform.Translate(new Vector2(initial_vector.normalized.x * (-1) * Time.deltaTime * thowback_power, 0));
-                }
-                else
-                {
-                    is_thowing_back = false;
-                }
+                player.DamageFixed(1);
+                since_last_strike = 0;
+                float throwback_direction = (player_obj.transform.position - transform.position).x < 0 ? -1 : 1;
+                PlayerControls player_controls = player_obj.GetComponent<PlayerControls>();
+                player_controls.ApplyForce(new Vector2(throwback_direction * xThrowbackForce, yThrowbackForce), thowbackDuration);
             }
         }
     }

@@ -9,6 +9,7 @@ public class PlayerBasic : LivingThing
     {
         GameMaster.KillPlayer(player);
         GameStateManager.Instance.OnGameStateChanged -= OnGameStateGhanged;
+        Debug.Log("player got killed");
     }
     // Start is called before the first frame update
 

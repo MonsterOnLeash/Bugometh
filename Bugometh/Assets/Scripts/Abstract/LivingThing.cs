@@ -30,7 +30,7 @@ public class LivingThing : MonoBehaviour
     }
     public virtual void OnDeath()
     {
-        Debug.Log("creature was killed");
+        Debug.Log("creature got killed");
         Destroy(gameObject);
     }
 
