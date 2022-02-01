@@ -5,7 +5,7 @@ using UnityEngine;
 public class LivingThing : MonoBehaviour
 {
     public int MaxHP;
-    private int CurrentHP;
+    protected int CurrentHP;
     public bool able_to_move = false;
     public float speed = 1; // TODO check if it's actually needed here
     
@@ -16,6 +16,7 @@ public class LivingThing : MonoBehaviour
         {
             OnDeath();
         }
+        Debug.Log("HP left: " + CurrentHP.ToString());
     }
 
     public virtual void DamageRelative(float damage_percent)
@@ -29,7 +30,8 @@ public class LivingThing : MonoBehaviour
     }
     public virtual void OnDeath()
     {
-        Debug.Log("creature was killed");
+        Debug.Log("creature got killed");
+        Destroy(gameObject);
     }
 
     public virtual void OnGameStateGhanged(GameState gameState)

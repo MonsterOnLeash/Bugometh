@@ -37,6 +37,10 @@ public class PlayerControls : MonoBehaviour
     public Animator attackAnimator;
     public LayerMask enemyLayers;
 
+    private bool is_force_applied;
+    private Vector2 force_applied;
+    private float force_duration;
+
     private void Awake()
     {
         facingRight = true;
@@ -52,6 +56,8 @@ public class PlayerControls : MonoBehaviour
         coyoteTimeCounter = coyoteTime;
         checkRadius = 0.15f;
         coyoteTime = 0.1f;
+        force_duration = 0;
+        is_force_applied = false;
     }
 
     // Update is called once per frame
@@ -112,7 +118,20 @@ public class PlayerControls : MonoBehaviour
             isJumping = false;
         }
 
-        rb.velocity = new Vector2(input * speed, rb.velocity.y);
+        float x_speed = input * speed;
+        float y_speed = rb.velocity.y;
+        if (is_force_applied)
+        {
+            x_speed += force_applied.x;
+            y_speed += force_applied.y;
+        }
+        rb.velocity = new Vector2(x_speed, y_speed);
+
+        force_duration -= Time.deltaTime;
+        if (force_duration <= 0)
+        {
+            is_force_applied = false; // from now force is no longer applied
+        }
 
         if ((!facingRight && input > 0) || (facingRight && input < 0))
             Flip();
@@ -135,5 +154,13 @@ public class PlayerControls : MonoBehaviour
         {
             enemy.gameObject.GetComponent<Enemy>().DamageFixed(attackPower);
         }
+    }
+
+    // applies force to player for some time
+    public void ApplyForce(Vector2 force, float duration) 
+    {
+        force_duration = duration;
+        force_applied = force;
+        is_force_applied = true;
     }
 }

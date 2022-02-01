@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerBasic : LivingThing
 {
+    private GameObject player;
     public override void OnDeath()
     {
-        GameMaster.KillPlayer(this);
+        GameMaster.KillPlayer(player);
         GameStateManager.Instance.OnGameStateChanged -= OnGameStateGhanged;
+        Debug.Log("player got killed");
     }
     // Start is called before the first frame update
 
@@ -18,8 +20,10 @@ public class PlayerBasic : LivingThing
     }
     void Start()
     {
+        CurrentHP = MaxHP;
         able_to_move = true;
         GameStateManager.Instance.OnGameStateChanged += OnGameStateGhanged;
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
