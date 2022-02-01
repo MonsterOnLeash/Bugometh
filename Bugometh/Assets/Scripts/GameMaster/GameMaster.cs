@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
@@ -10,8 +11,9 @@ public class GameMaster : MonoBehaviour
     private PlayerInput playerInput;
     public static void KillPlayer(GameObject player)
     {
-        Destroy(player);
+        //Destroy(player);
         Debug.Log("you died");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         // show some respawn message
     }
     public void QuitGame()
