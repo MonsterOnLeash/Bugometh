@@ -205,6 +205,40 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "GameMaster",
+            "id": "5514d74b-e5be-4203-95ef-5bf17e319fac",
+            "actions": [],
+            "bindings": []
+        },
+        {
+            "name": "UI",
+            "id": "e197eb2a-bafe-49ac-8f3f-081c3b0c9a76",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "ba825273-c715-4f59-9437-bdac647f2e5b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "66ce1b1d-a0bb-4faf-b2e5-f90e3d5c1083",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
