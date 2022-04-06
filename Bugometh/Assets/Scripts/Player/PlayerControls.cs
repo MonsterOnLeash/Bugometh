@@ -44,6 +44,8 @@ public class PlayerControls : MonoBehaviour
 
     public CameraManager cm;
 
+    public bool is_gameplay; // true if gamestate == gameblay
+
     private void Awake()
     {
         actionRequired = 0;
@@ -58,84 +60,88 @@ public class PlayerControls : MonoBehaviour
         coyoteTime = 0.05f;
         force_duration = 0;
         is_force_applied = false;
+        is_gameplay = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        input = playerInput.actions["Move"].ReadValue<float>();
-        jump = playerInput.actions["Jump"].ReadValue<float>();
-        actionRequired = playerInput.actions["Action"].ReadValue<float>();
-
-        if (input != 0 && isGrounded)
+        if (is_gameplay)
         {
-            animator.SetFloat("Speed", 2);
-            animator.SetBool("Jump", false);
-        }
-        else if (!isGrounded)
-            animator.SetBool("Jump", true);
-        else
-        {
-            animator.SetBool("Jump", false);
-            animator.SetFloat("Speed", 0);
-        }
+            input = playerInput.actions["Move"].ReadValue<float>();
+            jump = playerInput.actions["Jump"].ReadValue<float>();
+            actionRequired = playerInput.actions["Action"].ReadValue<float>();
 
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-
-        //rb.velocity = new Vector2(input * speed, rb.velocity.y);
-        //transform.Translate(new Vector2(input * speed * Time.deltaTime, 0));
-
-        if (playerInput.actions["Shoot"].triggered)
-            Attack();
-
-        if (isGrounded)
-            coyoteTimeCounter = coyoteTime;
-        else
-            coyoteTimeCounter -= Time.deltaTime;
-
-        if (playerInput.actions["Jump"].triggered && coyoteTimeCounter > 0)
-        {
-            isJumping = true;
-            jumpTimeCounter = jumpTime;
-            rb.velocity = Vector2.up * jumpForce;
-        }
-
-        if (jump == 1 && isJumping)
-        {
-            if (jumpTimeCounter > 0)
+            if (input != 0 && isGrounded)
             {
-                rb.velocity = Vector2.up * jumpForce;
-                jumpTimeCounter -= Time.deltaTime;
+                animator.SetFloat("Speed", 2);
+                animator.SetBool("Jump", false);
             }
+            else if (!isGrounded)
+                animator.SetBool("Jump", true);
             else
             {
+                animator.SetBool("Jump", false);
+                animator.SetFloat("Speed", 0);
+            }
+
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+
+            //rb.velocity = new Vector2(input * speed, rb.velocity.y);
+            //transform.Translate(new Vector2(input * speed * Time.deltaTime, 0));
+
+            if (playerInput.actions["Shoot"].triggered)
+                Attack();
+
+            if (isGrounded)
+                coyoteTimeCounter = coyoteTime;
+            else
+                coyoteTimeCounter -= Time.deltaTime;
+
+            if (playerInput.actions["Jump"].triggered && coyoteTimeCounter > 0)
+            {
+                isJumping = true;
+                jumpTimeCounter = jumpTime;
+                rb.velocity = Vector2.up * jumpForce;
+            }
+
+            if (jump == 1 && isJumping)
+            {
+                if (jumpTimeCounter > 0)
+                {
+                    rb.velocity = Vector2.up * jumpForce;
+                    jumpTimeCounter -= Time.deltaTime;
+                }
+                else
+                {
+                    isJumping = false;
+                }
+            }
+
+            if (playerInput.actions["JumpRelease"].triggered)
+            {
+                coyoteTimeCounter = 0;
                 isJumping = false;
             }
-        }
 
-        if (playerInput.actions["JumpRelease"].triggered)
-        {
-            coyoteTimeCounter = 0;
-            isJumping = false;
-        }
+            float x_speed = input * speed;
+            float y_speed = rb.velocity.y;
+            if (is_force_applied)
+            {
+                x_speed += force_applied.x;
+                y_speed += force_applied.y;
+            }
+            rb.velocity = new Vector2(x_speed, y_speed);
 
-        float x_speed = input * speed;
-        float y_speed = rb.velocity.y;
-        if (is_force_applied)
-        {
-            x_speed += force_applied.x;
-            y_speed += force_applied.y;
-        }
-        rb.velocity = new Vector2(x_speed, y_speed);
+            force_duration -= Time.deltaTime;
+            if (force_duration <= 0)
+            {
+                is_force_applied = false; // from now force is no longer applied
+            }
 
-        force_duration -= Time.deltaTime;
-        if (force_duration <= 0)
-        {
-            is_force_applied = false; // from now force is no longer applied
+            if ((!facingRight && input > 0) || (facingRight && input < 0))
+                Flip();
         }
-
-        if ((!facingRight && input > 0) || (facingRight && input < 0))
-            Flip();
     }
 
     void Flip()

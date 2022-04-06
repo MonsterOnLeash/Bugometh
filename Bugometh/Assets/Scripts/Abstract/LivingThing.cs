@@ -5,7 +5,7 @@ using UnityEngine;
 public class LivingThing : MonoBehaviour
 {
     public int MaxHP;
-    protected int CurrentHP;
+    public int CurrentHP;
     public bool able_to_move = false;
     public float speed = 1; // TODO check if it's actually needed here
     
