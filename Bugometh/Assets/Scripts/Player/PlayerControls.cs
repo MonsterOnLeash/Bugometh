@@ -40,22 +40,20 @@ public class PlayerControls : MonoBehaviour
     private bool is_force_applied;
     private Vector2 force_applied;
     private float force_duration;
+    private float actionRequired;
 
     private void Awake()
     {
+        actionRequired = 0;
         facingRight = true;
         isJumping = false;
-        jumpForce = 5.3f;
-        speed = 4;
-        attackRange = 0.5f;
-        jumpTime = 0.37f;
+        LoadSettings();
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         bc = GetComponent<BoxCollider2D>();
         jumpTimeCounter = jumpTime;
         coyoteTimeCounter = coyoteTime;
-        checkRadius = 0.15f;
-        coyoteTime = 0.1f;
+        coyoteTime = 0.05f;
         force_duration = 0;
         is_force_applied = false;
     }
@@ -65,6 +63,7 @@ public class PlayerControls : MonoBehaviour
     {
         input = playerInput.actions["Move"].ReadValue<float>();
         jump = playerInput.actions["Jump"].ReadValue<float>();
+        actionRequired = playerInput.actions["Action"].ReadValue<float>();
 
         if (input != 0 && isGrounded)
         {
@@ -162,5 +161,29 @@ public class PlayerControls : MonoBehaviour
         force_duration = duration;
         force_applied = force;
         is_force_applied = true;
+    }
+
+    public void LoadSettings()
+    {
+        jumpForce = PlayerPrefs.GetFloat("jumpForce", 5.3f);
+        speed = PlayerPrefs.GetFloat("speed", 4);
+        attackRange = PlayerPrefs.GetFloat("attackRange", 0.5f);
+        jumpTime = PlayerPrefs.GetFloat("jumpTime", 0.37f);
+        checkRadius = PlayerPrefs.GetFloat("checkRadius", 0.15f);
+        transform.position = new Vector2(PlayerPrefs.GetFloat("x", 0), PlayerPrefs.GetFloat("y", 0));
+    }
+
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetFloat("jumpForce", jumpForce);
+        PlayerPrefs.SetFloat("speed", speed);
+        PlayerPrefs.SetFloat("attackRange", attackRange);
+        PlayerPrefs.SetFloat("jumpTime", jumpTime);
+        PlayerPrefs.SetFloat("checkRadius", checkRadius);
+    }
+
+    public bool ActionRequired()
+    {
+        return actionRequired == 1;
     }
 }

@@ -115,7 +115,7 @@ MonoBehaviour:
     m_Bits: 128
   thowbackDuration: 0.1
   xThrowbackForce: 10
-  yThrowbackForce: 0.25
+  yThrowbackForce: 0.2
   timeBetweenStrikes: 1.23
 --- !u!61 &7441344982463154119
 BoxCollider2D:

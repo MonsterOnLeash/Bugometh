@@ -18,8 +18,9 @@ public class PlayerBasic : LivingThing
         Debug.Log("player's pause state changed");
         able_to_move = gameState == GameState.Gameplay;
     }
-    void Start()
+    void Awake()
     {
+        LoadSettings();
         CurrentHP = MaxHP;
         able_to_move = true;
         GameStateManager.Instance.OnGameStateChanged += OnGameStateGhanged;
@@ -31,4 +32,15 @@ public class PlayerBasic : LivingThing
     {
         
     }
+
+    public void LoadSettings()
+    {
+        MaxHP = PlayerPrefs.GetInt("maxHP", 5);
+    }
+
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetInt("maxHP", MaxHP);
+    }
+
 }
