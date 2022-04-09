@@ -42,6 +42,8 @@ public class PlayerControls : MonoBehaviour
     private float force_duration;
     private float actionRequired;
 
+    public CameraManager cm;
+
     private void Awake()
     {
         actionRequired = 0;
@@ -171,6 +173,7 @@ public class PlayerControls : MonoBehaviour
         jumpTime = PlayerPrefs.GetFloat("jumpTime", 0.37f);
         checkRadius = PlayerPrefs.GetFloat("checkRadius", 0.15f);
         transform.position = new Vector2(PlayerPrefs.GetFloat("x", 0), PlayerPrefs.GetFloat("y", 0));
+        cm.LoadActiveCamera();
     }
 
     public void SaveSettings()

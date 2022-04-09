@@ -1,19 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class SpawnPoint : MonoBehaviour
 {
     [SerializeField]
-    private GameObject playerPrefab;
+    //private GameObject playerPrefab;
     //private GameObject player;
     private BoxCollider2D bc;
-    
+    [SerializeField]
+    private CinemachineVirtualCamera cam;
+    [SerializeField]
+    private CameraManager cm;
+
     public void Save(GameObject player)
     {
         SpawnManager.NewPoint(transform.position);
         player.GetComponent<PlayerControls>().SaveSettings();
         player.GetComponent<PlayerBasic>().SaveSettings();
+        cm.ChangeSpawnCamera(cam);
         Debug.Log("Saved");
     }
 
