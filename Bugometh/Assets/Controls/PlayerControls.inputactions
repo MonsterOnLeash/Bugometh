@@ -62,7 +62,7 @@
                 {
                     "name": "Escape",
                     "type": "Button",
-                    "id": "e2846a6a-6f14-4b92-af70-db427d9a3de7",
+                    "id": "5463099f-ce70-40a7-a4a0-b946df6a96dd",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -171,7 +171,6 @@
                 },
                 {
                     "name": "",
-<<<<<<< HEAD
                     "id": "b5bf57b2-d889-48b9-bb26-3881a100bdc4",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "Press(behavior=1)",
@@ -211,42 +210,17 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Action",
-=======
-                    "id": "cfc6eb54-d1eb-4a7a-ade0-8485f630dbc2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ba2853c-919a-480b-b552-ef09ced983cc",
                     "path": "<Keyboard>/escape",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Escape",
->>>>>>> 4a18a74 (Add HP bar and adjust ui panels)
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "UI",
-            "id": "e197eb2a-bafe-49ac-8f3f-081c3b0c9a76",
-            "actions": [
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "ba825273-c715-4f59-9437-bdac647f2e5b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "66ce1b1d-a0bb-4faf-b2e5-f90e3d5c1083",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

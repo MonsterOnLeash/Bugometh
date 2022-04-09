@@ -6,10 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
-    private GameObject pause_menu;
-    private GameObject hp_bar;
-    private PlayerInput playerInput;
     private PanelManager panelManager;
+    private UIControls uiControls;
     public static void KillPlayer(GameObject player)
     {
         Destroy(player);
@@ -23,7 +21,6 @@ public class GameMaster : MonoBehaviour
     }
     public void Escape()
     {
-        //pause_menu.SetActive(!pause_menu.activeSelf);
         GameState currentGameState = GameStateManager.Instance.CurrentGameState;
         GameState newGameState = currentGameState == GameState.Gameplay ?
             GameState.Paused : GameState.Gameplay;
@@ -44,24 +41,26 @@ public class GameMaster : MonoBehaviour
     private void Resume()
     {
         Time.timeScale = 1;
-        //pause_menu.SetActive(false);
         panelManager.HideLastPanel();
 
     }
     private void Awake()
     {
-        //pause_menu = GameObject.FindGameObjectWithTag("PauseMenu");
-        //pause_menu.SetActive(false);
-        playerInput = GameObject.Find("Player").GetComponent<PlayerInput>();
-        //hp_bar = GameObject.FindGameObjectWithTag("HPBar");
+        uiControls = new UIControls();
         panelManager = GameObject.Find("PanelManager").GetComponent<PanelManager>();
     }
-    private void Update()
+    private void Start()
     {
-        if (playerInput.actions["Escape"].triggered)
-        {
-            Debug.Log("Escape");
-            Escape();
-        }
+        uiControls.Basic.Escape.performed += _ => Escape();
+        GameStateManager.Instance.SetState(GameState.Gameplay);
+        Time.timeScale = 1;
+    }
+    private void OnEnable()
+    {
+        uiControls.Enable();
+    }
+    private void OnDisable()
+    {
+        uiControls.Disable();
     }
 }

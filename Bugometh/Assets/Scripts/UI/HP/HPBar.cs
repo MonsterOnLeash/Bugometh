@@ -5,28 +5,47 @@ using UnityEngine.UI;
 
 public class HPBar : MonoBehaviour
 {
-
-	private Slider slider;
-	//public Gradient gradient;
-	//public Image fill;
+	public Image[] array;
+	public Sprite fullHeart;
+	public Sprite emptyHeart;
+	private int maxPossibleHP;
 
 	public void SetMaxHealth(int health)
 	{
-		slider.maxValue = health;
+		if (health > maxPossibleHP)
+        {
+			health = maxPossibleHP;
 
-		//fill.color = gradient.Evaluate(1f);
+		}
+		for (int i = 0; i < health; ++i)
+        {
+			array[i].enabled = true;
+        }
+		for (int i = health; i < maxPossibleHP; ++i)
+        {
+			array[i].enabled = false;
+        }
 	}
 
 	public void SetHealth(int health)
 	{
-		slider.value = health;
+		if (health > maxPossibleHP)
+		{
+			health = maxPossibleHP;
 
-		//fill.color = gradient.Evaluate(slider.normalizedValue);
+		}
+		for (int i = 0; i < health; ++i)
+		{
+			array[i].sprite = fullHeart;
+		}
+		for (int i = health; i < maxPossibleHP; ++i)
+		{
+			array[i].sprite = emptyHeart;
+		}
 	}
 
 	void Awake()
     {
-		slider = GetComponent<Slider>();
+		maxPossibleHP = array.Length;
     }
-
 }

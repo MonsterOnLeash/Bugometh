@@ -24,15 +24,23 @@ public class PlayerBasic : LivingThing
     }
     void Awake()
     {
-        LoadSettings();
-        CurrentHP = MaxHP;
-        able_to_move = true;
         GameStateManager.Instance.OnGameStateChanged += OnGameStateGhanged;
         player = GameObject.FindGameObjectWithTag("Player");
         controls = GetComponent<PlayerControls>();
         hpBar = GameObject.FindGameObjectWithTag("HPBar").GetComponent<HPBar>();
+        Debug.Log("player awake");
+
+    }
+
+    private void Start()
+    {
+        LoadSettings();
+        CurrentHP = MaxHP;
+        able_to_move = true;
+        Debug.Log(MaxHP);
         hpBar.SetMaxHealth(MaxHP);
         hpBar.SetHealth(MaxHP);
+        Debug.Log("player start");
     }
 
     public override void DamageFixed(int damage_value)
