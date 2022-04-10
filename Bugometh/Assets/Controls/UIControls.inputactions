@@ -1,0 +1,34 @@
+{
+    "name": "UIControls",
+    "maps": [
+        {
+            "name": "Basic",
+            "id": "d5a28b2d-329a-4e6e-b2c9-d3b5922e6f75",
+            "actions": [
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "fb01405d-d097-42a4-a9f3-870dd3837c07",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ce9d6e63-acfe-490c-94ed-59e4d52b599f",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

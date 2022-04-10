@@ -6,9 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour
 {
-    private GameObject pause_menu;
-    private GameObject hp_bar;
-    private PlayerInput playerInput;
+    private PanelManager panelManager;
+    private UIControls uiControls;
     public static void KillPlayer(GameObject player)
     {
         Destroy(player);
@@ -20,38 +19,48 @@ public class GameMaster : MonoBehaviour
         Debug.Log("game quit from game master");
         Application.Quit();
     }
-    private void Escape()
+    public void Escape()
     {
-        pause_menu.SetActive(!pause_menu.activeSelf);
         GameState currentGameState = GameStateManager.Instance.CurrentGameState;
         GameState newGameState = currentGameState == GameState.Gameplay ?
             GameState.Paused : GameState.Gameplay;
         GameStateManager.Instance.SetState(newGameState);
-
+        if (newGameState == GameState.Gameplay)
+        {
+            Resume();
+        } else
+        {
+            Pause();
+        }
     }
-
+    private void Pause()
+    {
+        Time.timeScale = 0;
+        panelManager.ShowPanel("PauseMenuPanel");
+    }
     private void Resume()
     {
-        pause_menu.SetActive(false);
-        // the code here is the same as in Escape() method for now
-        // but we should probably just set the gamestate instead of switching it
-        GameState currentGameState = GameStateManager.Instance.CurrentGameState;
-        GameState newGameState = currentGameState == GameState.Gameplay ?
-            GameState.Paused : GameState.Gameplay;
-        GameStateManager.Instance.SetState(newGameState);
+        Time.timeScale = 1;
+        panelManager.HideLastPanel();
+
+    }
+    private void Awake()
+    {
+        uiControls = new UIControls();
+        panelManager = GameObject.Find("PanelManager").GetComponent<PanelManager>();
     }
     private void Start()
     {
-        pause_menu = GameObject.FindGameObjectWithTag("PauseMenu");
-        pause_menu.SetActive(false);
-        playerInput = GetComponent<PlayerInput>();
-        hp_bar = GameObject.FindGameObjectWithTag("HPBar");
+        uiControls.Basic.Escape.performed += _ => Escape();
+        GameStateManager.Instance.SetState(GameState.Gameplay);
+        Time.timeScale = 1;
     }
-    private void Update()
+    private void OnEnable()
     {
-        //if (playerInput.actions["Escape"].triggered)
-        //{
-        //    Escape();
-        //}
+        uiControls.Enable();
+    }
+    private void OnDisable()
+    {
+        uiControls.Disable();
     }
 }

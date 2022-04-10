@@ -25,7 +25,7 @@ public class SpawnPoint : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("SaveArea");
+        //Debug.Log("SaveArea");
         if (collision.gameObject.CompareTag("Player") && collision.gameObject.GetComponent<PlayerControls>().ActionRequired())
         {
             Save(collision.gameObject);
