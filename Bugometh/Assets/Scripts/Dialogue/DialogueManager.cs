@@ -28,6 +28,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
         ChangeGameState();
+        GameMaster.BeginDialogue();
         dialoguePanel.transform.localScale = new Vector3(1, 1, 1);
         Debug.Log("Starting dialogue " + dialogue.id);
 
@@ -70,6 +71,7 @@ public class DialogueManager : MonoBehaviour
         currentDialogueID = "";
         sentences.Clear();
         dialoguePanel.transform.localScale = new Vector3(0, 0, 0);
+        GameMaster.EndDialogue();
         ChangeGameState();
     }
     private void ChangeGameState()
