@@ -21,6 +21,9 @@ public class DialogueManager : MonoBehaviour
     private void Awake()
     {
         dialoguePanel = GameObject.FindGameObjectWithTag("DialoguePanel");
+        nameText = dialoguePanel.transform.Find("NameText").gameObject.GetComponent<Text>();
+        dialogueText = dialoguePanel.transform.Find("DialogueText").gameObject.GetComponent<Text>();
+        dialogueImage = dialoguePanel.transform.Find("Image").gameObject.GetComponent<Image>();
         sentences = new Queue<DialogueSentence>();
         uiControls = new UIControls();
     }
@@ -75,7 +78,6 @@ public class DialogueManager : MonoBehaviour
         foreach(char c in sentence.ToCharArray())
         {
             dialogueText.text += c;
-            Debug.Log(c);
             yield return null;
         }
     }
