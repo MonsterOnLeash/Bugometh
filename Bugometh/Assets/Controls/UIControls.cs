@@ -35,6 +35,15 @@ public partial class @UIControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextSentence"",
+                    ""type"": ""Button"",
+                    ""id"": ""d49a8bd4-ec69-45d5-9636-093e65c0ae00"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -48,6 +57,17 @@ public partial class @UIControls : IInputActionCollection2, IDisposable
                     ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dc674115-6262-4e91-87cb-088f6d97715f"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextSentence"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -57,6 +77,7 @@ public partial class @UIControls : IInputActionCollection2, IDisposable
         // Basic
         m_Basic = asset.FindActionMap("Basic", throwIfNotFound: true);
         m_Basic_Escape = m_Basic.FindAction("Escape", throwIfNotFound: true);
+        m_Basic_NextSentence = m_Basic.FindAction("NextSentence", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -117,11 +138,13 @@ public partial class @UIControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Basic;
     private IBasicActions m_BasicActionsCallbackInterface;
     private readonly InputAction m_Basic_Escape;
+    private readonly InputAction m_Basic_NextSentence;
     public struct BasicActions
     {
         private @UIControls m_Wrapper;
         public BasicActions(@UIControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Escape => m_Wrapper.m_Basic_Escape;
+        public InputAction @NextSentence => m_Wrapper.m_Basic_NextSentence;
         public InputActionMap Get() { return m_Wrapper.m_Basic; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -134,6 +157,9 @@ public partial class @UIControls : IInputActionCollection2, IDisposable
                 @Escape.started -= m_Wrapper.m_BasicActionsCallbackInterface.OnEscape;
                 @Escape.performed -= m_Wrapper.m_BasicActionsCallbackInterface.OnEscape;
                 @Escape.canceled -= m_Wrapper.m_BasicActionsCallbackInterface.OnEscape;
+                @NextSentence.started -= m_Wrapper.m_BasicActionsCallbackInterface.OnNextSentence;
+                @NextSentence.performed -= m_Wrapper.m_BasicActionsCallbackInterface.OnNextSentence;
+                @NextSentence.canceled -= m_Wrapper.m_BasicActionsCallbackInterface.OnNextSentence;
             }
             m_Wrapper.m_BasicActionsCallbackInterface = instance;
             if (instance != null)
@@ -141,6 +167,9 @@ public partial class @UIControls : IInputActionCollection2, IDisposable
                 @Escape.started += instance.OnEscape;
                 @Escape.performed += instance.OnEscape;
                 @Escape.canceled += instance.OnEscape;
+                @NextSentence.started += instance.OnNextSentence;
+                @NextSentence.performed += instance.OnNextSentence;
+                @NextSentence.canceled += instance.OnNextSentence;
             }
         }
     }
@@ -148,5 +177,6 @@ public partial class @UIControls : IInputActionCollection2, IDisposable
     public interface IBasicActions
     {
         void OnEscape(InputAction.CallbackContext context);
+        void OnNextSentence(InputAction.CallbackContext context);
     }
 }
