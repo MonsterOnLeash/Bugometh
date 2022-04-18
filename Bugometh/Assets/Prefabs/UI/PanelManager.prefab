@@ -58,4 +58,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabsForPool:
   - {fileID: 2824160133251159561, guid: ed122566e4aae424c96b137c15712b27, type: 3}
-  - {fileID: 3718060583855926103, guid: ee59abb926fa1014f8b85c1059e91fb4, type: 3}
+  - {fileID: 8265483140728761718, guid: 6b6a83d5ce1f11b4985701f198f0efb9, type: 3}

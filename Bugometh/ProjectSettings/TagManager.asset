@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PauseMenu
   - HPBar
+  - DialoguePanel
   layers:
   - Default
   - TransparentFX
