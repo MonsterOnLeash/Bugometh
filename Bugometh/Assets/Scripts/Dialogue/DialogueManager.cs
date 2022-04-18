@@ -9,20 +9,34 @@ public class DialogueManager : MonoBehaviour
 
     private GameObject dialoguePanel;
 
+    private UIControls uiControls;
+
     public Text nameText;
     public Text dialogueText;
     public Image dialogueImage;
 
     private string currentDialogueID;
+    private bool dialogueInProgress;
 
     private void Awake()
     {
         dialoguePanel = GameObject.FindGameObjectWithTag("DialoguePanel");
         sentences = new Queue<DialogueSentence>();
+        uiControls = new UIControls();
     }
     void Start()
     {
         dialoguePanel.transform.localScale = new Vector3(0, 0, 0);
+        uiControls.Basic.NextSentence.performed += _ => OnNextSentencePress();
+        dialogueInProgress = false;
+    }
+
+    private void OnNextSentencePress()
+    {
+        if (dialogueInProgress)
+        {
+            DisplayNextSentence();
+        }
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -33,6 +47,7 @@ public class DialogueManager : MonoBehaviour
         Debug.Log("Starting dialogue " + dialogue.id);
 
         currentDialogueID = dialogue.id;
+        dialogueInProgress = true;
 
         foreach (DialogueSentence s in dialogue.sentences)
         {
@@ -43,11 +58,10 @@ public class DialogueManager : MonoBehaviour
     public void DisplayNextSentence()
     {
         if (sentences.Count == 0)
-        {
-            EndDialogue();
-            return;
+            {
+                EndDialogue();
+                return;
         }
-       
         DialogueSentence current_sentence = sentences.Dequeue();
         dialogueImage.sprite = current_sentence.image;
         nameText.text = current_sentence.name;
@@ -55,12 +69,13 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(printSentence(current_sentence.text));
     }
 
-    IEnumerator printSentence(string sentence)
+    private IEnumerator printSentence(string sentence)
     {
         dialogueText.text = "";
         foreach(char c in sentence.ToCharArray())
         {
             dialogueText.text += c;
+            Debug.Log(c);
             yield return null;
         }
     }
@@ -69,6 +84,7 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log("Ending dialogue " + currentDialogueID);
         currentDialogueID = "";
+        dialogueInProgress = false;
         sentences.Clear();
         dialoguePanel.transform.localScale = new Vector3(0, 0, 0);
         GameMaster.EndDialogue();
@@ -88,5 +104,14 @@ public class DialogueManager : MonoBehaviour
         {
             Time.timeScale = 0;
         }
+    }
+
+    private void OnEnable()
+    {
+        uiControls.Enable();
+    }
+    private void OnDisable()
+    {
+        uiControls.Disable();
     }
 }
