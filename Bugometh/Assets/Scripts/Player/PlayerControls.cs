@@ -16,6 +16,13 @@ public class PlayerControls : MonoBehaviour
     public bool isJumping;
     public float fallMultiplier = 1.5f;
     public float lowJumpMultiplier = 1;
+    
+    private List<float> jumpForceList = new List<float> {0, 0, 0};
+    private List<float> speedList = new List<float> { 0, 0, 0 };
+    private List<float> attackRangeList = new List<float> { 0, 0, 0 };
+    private List<float> jumpTimeList = new List<float> { 0, 0, 0 };
+    private List<float> checkRadiusList = new List<float> { 0, 0, 0 };
+    
 
     public float jumpForce;
     public bool isGrounded;
@@ -29,6 +36,8 @@ public class PlayerControls : MonoBehaviour
     public int attackPower;
     public float coyoteTime;
     public float coyoteTimeCounter;
+
+    public int colorIndex;
 
     public Rigidbody2D rb;
     public BoxCollider2D bc;
@@ -48,6 +57,12 @@ public class PlayerControls : MonoBehaviour
 
     private void Awake()
     {
+        colorIndex = 0;
+        jumpForceList = new List<float> { 0, 0, 0 };
+        speedList = new List<float> { 0, 0, 0 };
+        attackRangeList = new List<float> { 0, 0, 0 };
+        jumpTimeList = new List<float> { 0, 0, 0 };
+        checkRadiusList = new List<float> { 0, 0, 0 };
         actionRequired = 0;
         facingRight = true;
         isJumping = false;
@@ -66,6 +81,12 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        jumpForce = jumpForceList[colorIndex];
+        speed = speedList[colorIndex];
+        attackRange = attackRangeList[colorIndex];
+        jumpTime = jumpTimeList[colorIndex];
+        checkRadius = checkRadiusList[colorIndex];
+
         if (is_gameplay)
         {
             input = playerInput.actions["Move"].ReadValue<float>();
@@ -173,22 +194,30 @@ public class PlayerControls : MonoBehaviour
 
     public void LoadSettings()
     {
-        jumpForce = PlayerPrefs.GetFloat("jumpForce", 5.3f);
-        speed = PlayerPrefs.GetFloat("speed", 4);
-        attackRange = PlayerPrefs.GetFloat("attackRange", 0.5f);
-        jumpTime = PlayerPrefs.GetFloat("jumpTime", 0.37f);
-        checkRadius = PlayerPrefs.GetFloat("checkRadius", 0.15f);
-        transform.position = new Vector2(PlayerPrefs.GetFloat("x", 0), PlayerPrefs.GetFloat("y", 0));
-        cm.LoadActiveCamera();
+        List<string> colors = new List<string> { "Blue", "Red", "Green" };
+        for (int i = 0; i < 3; i++)
+        {
+            jumpForceList[i] = PlayerPrefs.GetFloat("jumpForce" + colors[i], 5.3f);
+            speedList[i] = PlayerPrefs.GetFloat("speed" + colors[i], 4);
+            attackRangeList[i] = PlayerPrefs.GetFloat("attack" + colors[i], 0.5f);
+            jumpTimeList[i] = PlayerPrefs.GetFloat("jumpTime" + colors[i], 0.37f);
+            checkRadiusList[i] = PlayerPrefs.GetFloat("checkRadius" + colors[i], 0.15f);
+            transform.position = new Vector2(PlayerPrefs.GetFloat("x", 0), PlayerPrefs.GetFloat("y", 0));
+            cm.LoadActiveCamera();
+        }
     }
 
     public void SaveSettings()
     {
-        PlayerPrefs.SetFloat("jumpForce", jumpForce);
-        PlayerPrefs.SetFloat("speed", speed);
-        PlayerPrefs.SetFloat("attackRange", attackRange);
-        PlayerPrefs.SetFloat("jumpTime", jumpTime);
-        PlayerPrefs.SetFloat("checkRadius", checkRadius);
+        List<string> colors = new List<string>{"Blue", "Red", "Green"};
+        for (int i = 0; i < 3; i++)
+        {
+            PlayerPrefs.SetFloat("jumpForce" + colors[i], jumpForceList[i]);
+            PlayerPrefs.SetFloat("speed" + colors[i], speedList[i]);
+            PlayerPrefs.SetFloat("attackRange" + colors[i], attackRangeList[i]);
+            PlayerPrefs.SetFloat("jumpTime" + colors[i], jumpTimeList[i]);
+            PlayerPrefs.SetFloat("checkRadius" + colors[i], checkRadiusList[i]);
+        }
     }
 
     public bool ActionRequired()
