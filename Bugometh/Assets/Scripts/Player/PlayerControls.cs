@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
-
     public float speed;
     private PlayerInput playerInput;
     public float input;
@@ -22,7 +21,12 @@ public class PlayerControls : MonoBehaviour
     private List<float> attackRangeList = new List<float> { 0, 0, 0 };
     private List<float> jumpTimeList = new List<float> { 0, 0, 0 };
     private List<float> checkRadiusList = new List<float> { 0, 0, 0 };
-    
+
+    private List<float> jumpForceDefault = new List<float> { 5.3f, 2, 7 };
+    private List<float> speedDefault = new List<float> { 4, 2, 6 };
+    private List<float> attackRangeDefault = new List<float> { 0.5f, 0, 0 };
+    private List<float> jumpTimeDefault = new List<float> { 0.35f, 0.3f, 0.4f };
+    private List<float> checkRadiusDefault = new List<float> { 0.15f, 0.15f, 0.15f };
 
     public float jumpForce;
     public bool isGrounded;
@@ -50,6 +54,8 @@ public class PlayerControls : MonoBehaviour
     private Vector2 force_applied;
     private float force_duration;
     private float actionRequired;
+    private float switchColorRequired;
+    private List<bool> unlockedColors;
 
     public CameraManager cm;
 
@@ -57,12 +63,14 @@ public class PlayerControls : MonoBehaviour
 
     private void Awake()
     {
+        PlayerPrefs.DeleteAll();
         colorIndex = 0;
         jumpForceList = new List<float> { 0, 0, 0 };
         speedList = new List<float> { 0, 0, 0 };
         attackRangeList = new List<float> { 0, 0, 0 };
         jumpTimeList = new List<float> { 0, 0, 0 };
         checkRadiusList = new List<float> { 0, 0, 0 };
+        unlockedColors = new List<bool> { false, false, false };
         actionRequired = 0;
         facingRight = true;
         isJumping = false;
@@ -93,6 +101,11 @@ public class PlayerControls : MonoBehaviour
             jump = playerInput.actions["Jump"].ReadValue<float>();
             actionRequired = playerInput.actions["Action"].ReadValue<float>();
 
+            if (playerInput.actions["Switch"].triggered)
+            {
+                SwitchColor();
+            }
+            Debug.Log(input);
             if (input != 0 && isGrounded)
             {
                 animator.SetFloat("Speed", 2);
@@ -125,7 +138,7 @@ public class PlayerControls : MonoBehaviour
                 jumpTimeCounter = jumpTime;
                 rb.velocity = Vector2.up * jumpForce;
             }
-
+            Debug.Log(jumpTimeCounter);
             if (jump == 1 && isJumping)
             {
                 if (jumpTimeCounter > 0)
@@ -197,14 +210,19 @@ public class PlayerControls : MonoBehaviour
         List<string> colors = new List<string> { "Blue", "Red", "Green" };
         for (int i = 0; i < 3; i++)
         {
-            jumpForceList[i] = PlayerPrefs.GetFloat("jumpForce" + colors[i], 5.3f);
-            speedList[i] = PlayerPrefs.GetFloat("speed" + colors[i], 4);
-            attackRangeList[i] = PlayerPrefs.GetFloat("attack" + colors[i], 0.5f);
-            jumpTimeList[i] = PlayerPrefs.GetFloat("jumpTime" + colors[i], 0.37f);
-            checkRadiusList[i] = PlayerPrefs.GetFloat("checkRadius" + colors[i], 0.15f);
+            jumpForceList[i] = PlayerPrefs.GetFloat("jumpForce" + colors[i], jumpForceDefault[i]);
+            speedList[i] = PlayerPrefs.GetFloat("speed" + colors[i], speedDefault[i]);
+            attackRangeList[i] = PlayerPrefs.GetFloat("attack" + colors[i], attackRangeDefault[i]);
+            jumpTimeList[i] = PlayerPrefs.GetFloat("jumpTime" + colors[i], jumpTimeDefault[i]);
+            checkRadiusList[i] = PlayerPrefs.GetFloat("checkRadius" + colors[i], checkRadiusDefault[i]);
             transform.position = new Vector2(PlayerPrefs.GetFloat("x", 0), PlayerPrefs.GetFloat("y", 0));
+            unlockedColors[i] = PlayerPrefs.GetInt("unlocked" + colors[i], 0) != 0;
             cm.LoadActiveCamera();
+            
         }
+        unlockedColors[0] = true;
+        unlockedColors[1] = true;
+        unlockedColors[2] = true;
     }
 
     public void SaveSettings()
@@ -217,6 +235,10 @@ public class PlayerControls : MonoBehaviour
             PlayerPrefs.SetFloat("attackRange" + colors[i], attackRangeList[i]);
             PlayerPrefs.SetFloat("jumpTime" + colors[i], jumpTimeList[i]);
             PlayerPrefs.SetFloat("checkRadius" + colors[i], checkRadiusList[i]);
+            if (unlockedColors[i] == false)
+                PlayerPrefs.SetInt("unlocked" + colors[i], 0);
+            else
+                PlayerPrefs.SetInt("unlocked" + colors[i], 1);
         }
     }
 
@@ -224,4 +246,15 @@ public class PlayerControls : MonoBehaviour
     {
         return actionRequired == 1;
     }
+
+    public void SwitchColor()
+    {
+        colorIndex = (colorIndex + 1) % 3;
+        while (!unlockedColors[colorIndex])
+        {
+            colorIndex = (colorIndex + 1) % 3;
+        }
+        animator.SetInteger("Color", colorIndex);
+    }
+
 }
