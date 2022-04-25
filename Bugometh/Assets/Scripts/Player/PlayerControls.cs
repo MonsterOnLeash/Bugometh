@@ -21,12 +21,14 @@ public class PlayerControls : MonoBehaviour
     private List<float> attackRangeList = new List<float> { 0, 0, 0 };
     private List<float> jumpTimeList = new List<float> { 0, 0, 0 };
     private List<float> checkRadiusList = new List<float> { 0, 0, 0 };
+    private List<int> attackPowerList = new List<int> { 0, 0, 0 };
 
     private List<float> jumpForceDefault = new List<float> { 5.3f, 2, 7 };
     private List<float> speedDefault = new List<float> { 4, 2, 6 };
-    private List<float> attackRangeDefault = new List<float> { 0.5f, 0, 0 };
+    private List<float> attackRangeDefault = new List<float> { 0.5f, 0.5f, 0 };
     private List<float> jumpTimeDefault = new List<float> { 0.35f, 0.3f, 0.4f };
     private List<float> checkRadiusDefault = new List<float> { 0.15f, 0.15f, 0.15f };
+    private List<int> attackPowerDefault = new List<int> { 2, 4, 0 };
 
     public float jumpForce;
     public bool isGrounded;
@@ -94,6 +96,7 @@ public class PlayerControls : MonoBehaviour
         attackRange = attackRangeList[colorIndex];
         jumpTime = jumpTimeList[colorIndex];
         checkRadius = checkRadiusList[colorIndex];
+        attackPower = attackPowerList[colorIndex];
 
         if (is_gameplay)
         {
@@ -138,7 +141,6 @@ public class PlayerControls : MonoBehaviour
                 jumpTimeCounter = jumpTime;
                 rb.velocity = Vector2.up * jumpForce;
             }
-            Debug.Log(jumpTimeCounter);
             if (jump == 1 && isJumping)
             {
                 if (jumpTimeCounter > 0)
@@ -215,6 +217,7 @@ public class PlayerControls : MonoBehaviour
             attackRangeList[i] = PlayerPrefs.GetFloat("attack" + colors[i], attackRangeDefault[i]);
             jumpTimeList[i] = PlayerPrefs.GetFloat("jumpTime" + colors[i], jumpTimeDefault[i]);
             checkRadiusList[i] = PlayerPrefs.GetFloat("checkRadius" + colors[i], checkRadiusDefault[i]);
+            attackPowerList[i] = PlayerPrefs.GetInt("attackPower" + colors[i], attackPowerDefault[i]);
             transform.position = new Vector2(PlayerPrefs.GetFloat("x", 0), PlayerPrefs.GetFloat("y", 0));
             unlockedColors[i] = PlayerPrefs.GetInt("unlocked" + colors[i], 0) != 0;
             cm.LoadActiveCamera();
@@ -235,6 +238,7 @@ public class PlayerControls : MonoBehaviour
             PlayerPrefs.SetFloat("attackRange" + colors[i], attackRangeList[i]);
             PlayerPrefs.SetFloat("jumpTime" + colors[i], jumpTimeList[i]);
             PlayerPrefs.SetFloat("checkRadius" + colors[i], checkRadiusList[i]);
+            PlayerPrefs.SetInt("attackPower" + colors[i], attackPowerList[i]);
             if (unlockedColors[i] == false)
                 PlayerPrefs.SetInt("unlocked" + colors[i], 0);
             else
