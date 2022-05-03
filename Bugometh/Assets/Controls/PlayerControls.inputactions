@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "JumpRelease",
-                    "type": "Button",
-                    "id": "084ebfda-83ff-40c6-959a-a6131d7dca21",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "PauseMenu",
                     "type": "Button",
                     "id": "95681b5d-5065-4118-a398-620c1a4819ff",
@@ -127,7 +118,7 @@
                     "name": "",
                     "id": "1a3f268e-7303-4dce-807c-e70a2f8204f0",
                     "path": "<Keyboard>/z",
-                    "interactions": "Press",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Jump",
@@ -138,7 +129,7 @@
                     "name": "",
                     "id": "2bd9c370-600c-43c8-aa1f-e6f0a491a1f5",
                     "path": "<Gamepad>/buttonSouth",
-                    "interactions": "Press",
+                    "interactions": "Press(behavior=2)",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Jump",
@@ -164,28 +155,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Shoot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "7ba16bd0-e3e1-4b18-8d6f-97e2552686ea",
-                    "path": "<Keyboard>/z",
-                    "interactions": "Press(behavior=1)",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "JumpRelease",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b5bf57b2-d889-48b9-bb26-3881a100bdc4",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "Press(behavior=1)",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "JumpRelease",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -135,7 +135,7 @@ public class PlayerControls : MonoBehaviour
             else
                 coyoteTimeCounter -= Time.deltaTime;
 
-            if (playerInput.actions["Jump"].triggered && coyoteTimeCounter > 0)
+            if (playerInput.actions["Jump"].triggered && coyoteTimeCounter > 0 && jump == 1)
             {
                 isJumping = true;
                 jumpTimeCounter = jumpTime;
@@ -154,7 +154,7 @@ public class PlayerControls : MonoBehaviour
                 }
             }
 
-            if (playerInput.actions["JumpRelease"].triggered)
+            if (playerInput.actions["Jump"].triggered && jump == 0)
             {
                 coyoteTimeCounter = 0;
                 isJumping = false;

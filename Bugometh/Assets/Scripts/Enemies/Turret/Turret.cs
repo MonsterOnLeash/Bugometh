@@ -11,7 +11,9 @@ public class Turret : Enemy
     private GameObject projectile;
 
     private float shotInterval;
+    private float bigShotInterval;
     private float beforeNextShot;
+    private int shotCounter;
 
     private Vector2 direction;
 
@@ -19,6 +21,8 @@ public class Turret : Enemy
     {
         shotInterval = 1;
         beforeNextShot = 0;
+        bigShotInterval = 2.5f;
+        shotCounter = 3;
         if (projectileSpawnPoint.position.x > transform.position.x)
             direction = new Vector2(1, 0);
         else
@@ -34,9 +38,16 @@ public class Turret : Enemy
             if (beforeNextShot <= 0)
             {
                 GameObject bullet = Instantiate(projectile, projectileSpawnPoint.position, projectileSpawnPoint.rotation);
-
+                shotCounter -= 1;
                 bullet.GetComponent<TurretProjectile>().SetSpeed(direction.x);
-                beforeNextShot = shotInterval;
+                if (shotCounter == 0)
+                {
+                    beforeNextShot = bigShotInterval;
+                    shotCounter = 3;
+                }
+                else
+                    beforeNextShot = shotInterval;
+
             }
             else
             {
@@ -46,6 +57,7 @@ public class Turret : Enemy
         else
         {
             beforeNextShot = 0;
+            shotCounter = 3;
         }
     }
 }
