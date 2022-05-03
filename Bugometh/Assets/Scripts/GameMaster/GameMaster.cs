@@ -70,7 +70,7 @@ public class GameMaster : MonoBehaviour
     }
     private void Resume()
     {
-        panelManager.HideLastPanel();
+        panelManager.HideAllPanels();
         isPaused = false;
 
     }

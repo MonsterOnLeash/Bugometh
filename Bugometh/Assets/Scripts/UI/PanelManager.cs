@@ -72,6 +72,14 @@ public class PanelManager : Singleton<PanelManager>
         }
     }
 
+    public void HideAllPanels()
+    {
+        while(instances_list.Count > 0)
+        {
+            HideLastPanel();
+        }
+    }
+
     private PanelInstanceModel GetLastPanel()
     {
         if (instances_list.Count > 0)

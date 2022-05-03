@@ -188,6 +188,7 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         /// </summary>
         public void UpdateBindingDisplay()
         {
+            Debug.Log("updating binding display");
             var displayString = string.Empty;
             var deviceLayoutName = default(string);
             var controlPath = default(string);
@@ -262,11 +263,21 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 m_RebindOperation = null;
             }
 
+            // Disable the action before rebinding
+            action.Disable();
+
+            //TODO add controller support
             // Configure the rebind.
             m_RebindOperation = action.PerformInteractiveRebinding(bindingIndex)
+                .WithControlsExcluding("<Mouse>/leftButton")
+                .WithControlsExcluding("<Mouse>/rightButton")
+                .WithControlsExcluding("<Mouse>/press")
+                .WithControlsExcluding("<Pointer>/position")
+                .WithCancelingThrough("<Keyboard>/escape")
                 .OnCancel(
                     operation =>
                     {
+                        action.Enable();
                         m_RebindStopEvent?.Invoke(this, operation);
                         m_RebindOverlay?.SetActive(false);
                         UpdateBindingDisplay();
@@ -275,8 +286,18 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 .OnComplete(
                     operation =>
                     {
+                        action.Enable();
                         m_RebindOverlay?.SetActive(false);
                         m_RebindStopEvent?.Invoke(this, operation);
+                        // We dhouldn't update binding if it already exists
+                        if (CheckDuplicateBindings(action, bindingIndex, allCompositeParts))
+                        {
+                            action.RemoveBindingOverride(bindingIndex);
+                            CleanUp();
+                            PerformInteractiveRebind(action, bindingIndex, allCompositeParts);
+                            return;
+                        }
+
                         UpdateBindingDisplay();
                         CleanUp();
 
@@ -316,6 +337,33 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             m_RebindOperation.Start();
         }
 
+        private bool CheckDuplicateBindings(InputAction action, int bindingIndex, bool allCompositeParts = false)
+        {
+            InputBinding bindingOfIndex = action.bindings[bindingIndex];
+            foreach (InputBinding binding in action.actionMap.bindings) {
+                if (binding.action == bindingOfIndex.action)
+                {
+                    continue;
+                }
+                if (binding.effectivePath == bindingOfIndex.effectivePath)
+                {
+                    Debug.Log("duplicate found: " + bindingOfIndex.effectivePath);
+                    return true;
+                }
+            }
+            if (allCompositeParts)
+            {
+                for (int i  = 1; i < bindingIndex; ++i)
+                {
+                    if (action.bindings[i].effectivePath == bindingOfIndex.effectivePath)
+                    {
+                        Debug.Log("duplicate found: " + bindingOfIndex.effectivePath);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         protected void OnEnable()
         {
             if (s_RebindActionUIs == null)
@@ -420,7 +468,14 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             UpdateBindingDisplay();
         }
 
-        #endif
+        private void Start()
+        {
+            Debug.Log("rebind action ui start");
+            UpdateActionLabel();
+            UpdateBindingDisplay();
+        }
+
+#endif
 
         private void UpdateActionLabel()
         {
