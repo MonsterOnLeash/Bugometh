@@ -25,11 +25,7 @@ public class PanelManager : Singleton<PanelManager>
             }
             if (behaviour == PanelShowBehaviour.HIDE_LAST)
             {
-                var lastPanel = GetLastPanel();
-                if (lastPanel != null)
-                {
-                    lastPanel.PanelInstance.SetActive(false);
-                }
+                HideLastPanel();
             }
             
             instances_list.Add(new PanelInstanceModel
@@ -37,6 +33,9 @@ public class PanelManager : Singleton<PanelManager>
                 PanelId = PanelId,
                 PanelInstance = panelInstance
             });
+        } else
+        {
+            Debug.Log("fuck");
         }
     }
 
@@ -69,6 +68,14 @@ public class PanelManager : Singleton<PanelManager>
             {
                 previousPanel.PanelInstance.SetActive(true);
             }
+        }
+    }
+
+    public void HideAllPanels()
+    {
+        while(instances_list.Count > 0)
+        {
+            HideLastPanel();
         }
     }
 

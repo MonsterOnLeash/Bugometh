@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "PauseMenu",
-                    "type": "Button",
-                    "id": "95681b5d-5065-4118-a398-620c1a4819ff",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Action",
                     "type": "PassThrough",
                     "id": "4b026f47-3a52-4468-9255-7aa85c317f78",
@@ -63,6 +54,24 @@
                     "name": "Switch",
                     "type": "Button",
                     "id": "773a2b07-9d71-4a80-905c-4be214f4a3b4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Left",
+                    "type": "Button",
+                    "id": "fae36f2d-6bd0-42fa-a9f1-bacbc8afb0f1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Right",
+                    "type": "Button",
+                    "id": "0da71502-de2b-4a22-9c6d-b7e3e6a0e014",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -160,17 +169,6 @@
                 },
                 {
                     "name": "",
-                    "id": "99394c4a-8c5a-4cf6-9cc0-cea8ddcd4721",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PauseMenu",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "59f3d598-e4e6-481e-b40d-c0902013f390",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "Press",
@@ -204,23 +202,34 @@
                 },
                 {
                     "name": "",
-                    "id": "4c51fc71-43c0-41df-b30d-0bbfd7ed7bac",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Switch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3185ee0d-ba6f-4a16-948c-aa0b122d4aa0",
                     "path": "<Keyboard>/tab",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23a72d41-27db-4761-8297-c0683dd99c84",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e572dc0-72f2-4201-b952-6532c2c79868",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

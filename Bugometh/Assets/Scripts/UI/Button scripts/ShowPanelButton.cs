@@ -13,6 +13,7 @@ public class ShowPanelButton : MonoBehaviour
 
     public void OnButtonPress()
     {
+        Debug.Log("trying to dhow panel " + panelId);
         panel_manager.ShowPanel(panelId, behaviour);
     }
 

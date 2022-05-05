@@ -1217,7 +1217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabsForPool:
   - {fileID: 2824160133251159561, guid: ed122566e4aae424c96b137c15712b27, type: 3}
-  - {fileID: 2824160133251159561, guid: ed122566e4aae424c96b137c15712b27, type: 3}
+  - {fileID: 6264249922861233785, guid: ec639bbdd81723346b2b93cca0180ce2, type: 3}
 --- !u!1 &202283653
 GameObject:
   m_ObjectHideFlags: 0
@@ -73808,7 +73808,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.7786155, y: -1.3178815, z: -11.033428}
+  m_LocalPosition: {x: -2.1214643, y: -1.3178815, z: -11.033428}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -90961,6 +90961,7 @@ GameObject:
   - component: {fileID: 1256729076}
   - component: {fileID: 1256729075}
   - component: {fileID: 1256729077}
+  - component: {fileID: 1256729078}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -91009,6 +91010,19 @@ MonoBehaviour:
   nameText: {fileID: 0}
   dialogueText: {fileID: 0}
   dialogueImage: {fileID: 0}
+--- !u!114 &1256729078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256729074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6c2da2db9374dada6761b5e35121c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actions: {fileID: -944628639613478452, guid: fcba4368e324d8741a3479a95352d362, type: 3}
 --- !u!4 &1266360653 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2108434376623793408, guid: 4d0045fb6c039184aa3c8a990b8acfa0, type: 3}
