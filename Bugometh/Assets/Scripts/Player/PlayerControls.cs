@@ -100,7 +100,18 @@ public class PlayerControls : MonoBehaviour
 
         if (is_gameplay)
         {
-            input = playerInput.actions["Move"].ReadValue<float>();
+            //input = playerInput.actions["Move"].ReadValue<float>();
+            if (playerInput.actions["Left"].ReadValue<float>() > 0)
+            {
+                input = -1;
+            }
+            else if (playerInput.actions["Right"].ReadValue<float>() > 0)
+            {
+                input = 1;
+            } else
+            {
+                input = 0;
+            }
             jump = playerInput.actions["Jump"].ReadValue<float>();
             actionRequired = playerInput.actions["Action"].ReadValue<float>();
 
@@ -108,7 +119,6 @@ public class PlayerControls : MonoBehaviour
             {
                 SwitchColor();
             }
-            Debug.Log(input);
             if (input != 0 && isGrounded)
             {
                 animator.SetFloat("Speed", 2);
