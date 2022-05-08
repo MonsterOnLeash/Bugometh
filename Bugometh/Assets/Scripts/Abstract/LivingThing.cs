@@ -8,10 +8,12 @@ public class LivingThing : MonoBehaviour
     public int CurrentHP;
     public bool able_to_move = false;
     public float speed = 1; // TODO check if it's actually needed here
+    public bool shield = false;
     
-    public virtual void DamageFixed(int damage_value)
+    public virtual void DamageFixed(int damage_value, bool pierce = false)
     {
-        CurrentHP -= damage_value;
+        if (!shield || pierce)
+            CurrentHP -= damage_value;
         if (CurrentHP <= 0)
         {
             OnDeath();

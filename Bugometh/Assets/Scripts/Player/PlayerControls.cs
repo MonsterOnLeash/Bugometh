@@ -21,12 +21,12 @@ public class PlayerControls : MonoBehaviour
     private List<float> attackRangeList = new List<float> { 0, 0, 0 };
     private List<float> jumpTimeList = new List<float> { 0, 0, 0 };
     private List<float> checkRadiusList = new List<float> { 0, 0, 0 };
-    private List<int> attackPowerList = new List<int> { 0, 0, 0 };
+    public List<int> attackPowerList = new List<int> { 0, 0, 0 };
 
-    private List<float> jumpForceDefault = new List<float> { 5.3f, 2, 7 };
-    private List<float> speedDefault = new List<float> { 4, 2, 6 };
+    private List<float> jumpForceDefault = new List<float> { 5.3f, 5.3f, 5.3f };
+    private List<float> speedDefault = new List<float> { 4, 3, 5 };
     private List<float> attackRangeDefault = new List<float> { 0.5f, 0.5f, 0 };
-    private List<float> jumpTimeDefault = new List<float> { 0.35f, 0.3f, 0.4f };
+    private List<float> jumpTimeDefault = new List<float> { 0.35f, 0.35f, 0.35f };
     private List<float> checkRadiusDefault = new List<float> { 0.15f, 0.15f, 0.15f };
     private List<int> attackPowerDefault = new List<int> { 2, 4, 0 };
 
@@ -37,6 +37,7 @@ public class PlayerControls : MonoBehaviour
     public float checkRadius;
     public LayerMask whatIsGround;
     public int extraJumps;
+    public int availableJumps;
     public Transform attackPoint;
     public float attackRange;
     public int attackPower;
@@ -44,6 +45,7 @@ public class PlayerControls : MonoBehaviour
     public float coyoteTimeCounter;
 
     public int colorIndex;
+    public int shotEnabled;
 
     public Rigidbody2D rb;
     public BoxCollider2D bc;
@@ -57,15 +59,19 @@ public class PlayerControls : MonoBehaviour
     private float force_duration;
     private float actionRequired;
     private float switchColorRequired;
-    private List<bool> unlockedColors;
+    public List<bool> unlockedColors;
 
     public CameraManager cm;
 
     public bool is_gameplay; // true if gamestate == gameblay
 
+    [SerializeField]
+    GameObject blueShot;
+    [SerializeField]
+    GameObject greenShot;
+
     private void Awake()
     {
-        PlayerPrefs.DeleteAll();
         colorIndex = 0;
         jumpForceList = new List<float> { 0, 0, 0 };
         speedList = new List<float> { 0, 0, 0 };
@@ -77,6 +83,7 @@ public class PlayerControls : MonoBehaviour
         facingRight = true;
         isJumping = false;
         LoadSettings();
+        availableJumps = extraJumps + 1;
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         bc = GetComponent<BoxCollider2D>();
@@ -91,6 +98,7 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //change values according to color used
         jumpForce = jumpForceList[colorIndex];
         speed = speedList[colorIndex];
         attackRange = attackRangeList[colorIndex];
@@ -100,7 +108,7 @@ public class PlayerControls : MonoBehaviour
 
         if (is_gameplay)
         {
-            //input = playerInput.actions["Move"].ReadValue<float>();
+            //choosing direction
             if (playerInput.actions["Left"].ReadValue<float>() > 0)
             {
                 input = -1;
@@ -112,13 +120,18 @@ public class PlayerControls : MonoBehaviour
             {
                 input = 0;
             }
+
+            //read from input
             jump = playerInput.actions["Jump"].ReadValue<float>();
             actionRequired = playerInput.actions["Action"].ReadValue<float>();
 
+            //change colors
             if (playerInput.actions["Switch"].triggered)
             {
                 SwitchColor();
             }
+
+            //player animation switch
             if (input != 0 && isGrounded)
             {
                 animator.SetFloat("Speed", 2);
@@ -132,24 +145,33 @@ public class PlayerControls : MonoBehaviour
                 animator.SetFloat("Speed", 0);
             }
 
+            //true if stands on ground
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
 
-            //rb.velocity = new Vector2(input * speed, rb.velocity.y);
-            //transform.Translate(new Vector2(input * speed * Time.deltaTime, 0));
-
+            //trigger for attack
             if (playerInput.actions["Shoot"].triggered)
                 Attack();
 
+            //coyote time ana extra jumps management
             if (isGrounded)
+            {
                 coyoteTimeCounter = coyoteTime;
+                availableJumps = extraJumps + 1;
+            }
             else
                 coyoteTimeCounter -= Time.deltaTime;
 
-            if (playerInput.actions["Jump"].triggered && coyoteTimeCounter > 0 && jump == 1)
+            if (playerInput.actions["Jump"].triggered && jump == 1)
+                availableJumps -= 1;
+
+            //jump mechanic
+            Debug.Log(availableJumps);
+            if (playerInput.actions["Jump"].triggered && jump == 1 && (coyoteTimeCounter > 0 || availableJumps > 0))
             {
                 isJumping = true;
                 jumpTimeCounter = jumpTime;
                 rb.velocity = Vector2.up * jumpForce;
+                
             }
             if (jump == 1 && isJumping)
             {
@@ -200,12 +222,17 @@ public class PlayerControls : MonoBehaviour
 
     void Attack()
     {
-        attackAnimator.SetTrigger("Attack");
-
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers); 
-        foreach(Collider2D enemy in hitEnemies)
+        switch (colorIndex)
         {
-            enemy.gameObject.GetComponent<Enemy>().DamageFixed(attackPower);
+            case 0:
+                BlueAttack();
+                break;
+            case 1:
+                RedAttack();
+                break;
+            case 2:
+                GreenAttack();
+                break;
         }
     }
 
@@ -234,8 +261,8 @@ public class PlayerControls : MonoBehaviour
             
         }
         unlockedColors[0] = true;
-        unlockedColors[1] = true;
-        unlockedColors[2] = true;
+        extraJumps = PlayerPrefs.GetInt("extraJumps", 0);
+        shotEnabled = PlayerPrefs.GetInt("shotEnabled", 0);
     }
 
     public void SaveSettings()
@@ -254,6 +281,8 @@ public class PlayerControls : MonoBehaviour
             else
                 PlayerPrefs.SetInt("unlocked" + colors[i], 1);
         }
+        PlayerPrefs.SetInt("shotEnabled", shotEnabled);
+        PlayerPrefs.SetInt("extraJumps", extraJumps);
     }
 
     public bool ActionRequired()
@@ -271,4 +300,51 @@ public class PlayerControls : MonoBehaviour
         animator.SetInteger("Color", colorIndex);
     }
 
+    void BlueAttack()
+    {
+        if (shotEnabled == 0)
+
+        {
+            attackAnimator.SetTrigger("Attack");
+
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+            foreach (Collider2D enemy in hitEnemies)
+            {
+                enemy.gameObject.GetComponent<Enemy>().DamageFixed(attackPower);
+            }
+        }
+        else if (BlueShot.numberOfShots < 5)
+        {
+            GameObject shot = Instantiate(blueShot, attackPoint.position, attackPoint.rotation);
+            int xAxis = 1;
+            if (attackPoint.position.x < transform.position.x)
+                xAxis = -1;
+            shot.gameObject.GetComponent<BlueShot>().SetProps(xAxis, 0, attackPower);
+        }
+    }
+
+    void RedAttack()
+    {
+        attackAnimator.SetTrigger("Attack");
+
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider2D enemy in hitEnemies)
+        {
+            enemy.gameObject.GetComponent<Enemy>().DamageFixed(attackPower, true);
+        }
+    }
+
+    void GreenAttack()
+    {
+        Debug.Log(GreenShot.numberOfShots);
+        if (GreenShot.numberOfShots == 0)
+        {
+            GameObject shot = Instantiate(greenShot, attackPoint.position, attackPoint.rotation);
+            int xAxis = 1;
+            if (attackPoint.position.x < transform.position.x)
+                xAxis = -1;
+            shot.gameObject.GetComponent<GreenShot>().SetProps(xAxis, 0);
+
+        }
+    }
 }

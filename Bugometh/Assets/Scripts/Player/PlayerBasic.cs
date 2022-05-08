@@ -43,7 +43,7 @@ public class PlayerBasic : LivingThing
         Debug.Log("player start");
     }
 
-    public override void DamageFixed(int damage_value)
+    public override void DamageFixed(int damage_value, bool pierce = false)
     {
         CurrentHP -= damage_value;
         hpBar.SetHealth(CurrentHP > 0 ? CurrentHP : 0);

@@ -54,10 +54,6 @@ public class Turret : Enemy
                 beforeNextShot -= Time.deltaTime;
             }
         }
-        else
-        {
-            beforeNextShot = 0;
-            shotCounter = 3;
-        }
+
     }
 }
