@@ -165,7 +165,7 @@ public class PlayerControls : MonoBehaviour
                 availableJumps -= 1;
 
             //jump mechanic
-            Debug.Log(availableJumps);
+            //Debug.Log(availableJumps);
             if (playerInput.actions["Jump"].triggered && jump == 1 && (coyoteTimeCounter > 0 || availableJumps > 0))
             {
                 isJumping = true;

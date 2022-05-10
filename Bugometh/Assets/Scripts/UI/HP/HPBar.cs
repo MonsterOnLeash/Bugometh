@@ -9,6 +9,8 @@ public class HPBar : MonoBehaviour
 	public Sprite fullHeart;
 	public Sprite emptyHeart;
 	private int maxPossibleHP;
+	private int currentMaxHP;
+	private int currentHP;
 
 	public void SetMaxHealth(int health)
 	{
@@ -17,6 +19,11 @@ public class HPBar : MonoBehaviour
 			health = maxPossibleHP;
 
 		}
+		currentMaxHP = health;
+		if (currentHP > currentMaxHP)
+        {
+			currentHP = currentMaxHP;
+        }
 		for (int i = 0; i < health; ++i)
         {
 			array[i].enabled = true;
@@ -29,11 +36,12 @@ public class HPBar : MonoBehaviour
 
 	public void SetHealth(int health)
 	{
-		if (health > maxPossibleHP)
+		if (health > currentMaxHP)
 		{
-			health = maxPossibleHP;
+			health = currentMaxHP;
 
 		}
+		currentHP = health;
 		for (int i = 0; i < health; ++i)
 		{
 			array[i].sprite = fullHeart;
@@ -44,8 +52,20 @@ public class HPBar : MonoBehaviour
 		}
 	}
 
+	public void IncreaseMaxHealth(int value)
+    {
+		int new_max_HP = currentMaxHP + value;
+		SetMaxHealth(new_max_HP);
+    }
+	public void IncreaseHealth(int value)
+	{
+		int new_HP = currentHP + value;
+		SetHealth(new_HP);
+	}
+
 	void Awake()
     {
 		maxPossibleHP = array.Length;
+		currentMaxHP = array.Length;
     }
 }
