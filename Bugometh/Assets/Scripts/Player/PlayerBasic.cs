@@ -7,7 +7,7 @@ public class PlayerBasic : LivingThing
     private GameObject player;
     private PlayerControls controls;
 
-    private HPBar hpBar;
+    public HPBar hpBar;
     public override void OnDeath()
     {
         GameMaster.KillPlayer(player);
@@ -43,7 +43,7 @@ public class PlayerBasic : LivingThing
         Debug.Log("player start");
     }
 
-    public override void DamageFixed(int damage_value)
+    public override void DamageFixed(int damage_value, bool pierce = false)
     {
         CurrentHP -= damage_value;
         hpBar.SetHealth(CurrentHP > 0 ? CurrentHP : 0);
@@ -75,4 +75,26 @@ public class PlayerBasic : LivingThing
         PlayerPrefs.SetInt("maxHP", MaxHP);
     }
 
+    public void SetMaxHP(int health)
+    {
+        hpBar.SetMaxHealth(health);
+        MaxHP = health;
+    }
+    public void SetCurrentHP(int health)
+    {
+        hpBar.SetHealth(health);
+        CurrentHP = health;
+    }
+    //takes both negative and positive values
+    public void IncreaseMaxHP(int health)
+    {
+        hpBar.IncreaseMaxHealth(health);
+        MaxHP += health;
+    }
+    //takes both negative and positive values
+    public void IncreaseCurrentHP(int health)
+    {
+        hpBar.IncreaseHealth(health);
+        CurrentHP += health;
+    }
 }
