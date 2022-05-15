@@ -48,9 +48,6 @@ public class BossOneController : Enemy
     private GameObject player_obj;
 
     private BossOne.BossOneBehaviour currentBehaviour;
-    [SerializeField]
-    private BossOne.BossOneBehaviourThreshold[] behaviours; // sorted backwards array of thresholds, each threshold represents value from which a new behaviour starts
-    // example : [{40, stay}, {30, hop}, {20, walk}]
     private bool newBehaviourRequired; // shows if the behaviour has to be changed as soon as the current action ends
     private BossOne.BossOneBehaviour newBehaviour; // the new behaviour variable
 
@@ -59,17 +56,14 @@ public class BossOneController : Enemy
     private float timeForEachAttack;
     private float sinceLastAttackChange;
 
+    private bool fightStarted;
+    public BossOneRoom room;
+    public GameObject rewardPrefab;
+
+    private float yRewardSpawnPoint;
+
     private Animator animator;
-    private BossOne.BossOneBehaviour GetCurrentBehaviour()
-    {
-        for(int i = 0; i < behaviours.Length; ++i) {
-            if (behaviours[i].threshold >= CurrentHP && (i == behaviours.Length - 1 || behaviours[i + 1].threshold < CurrentHP))
-            {
-                return behaviours[i].behaviour;
-            }
-        }
-        return behaviours[0].behaviour;
-    }
+
     private void Flip()
     {
         direction *= -1;
@@ -118,15 +112,17 @@ public class BossOneController : Enemy
         }
     }
 
-    public override void DamageFixed(int damage_value, bool pierce = false)
+    public override void OnDeath()
     {
-        if (!shield || pierce)
-            CurrentHP -= damage_value;
-        if (CurrentHP <= 0)
-        {
-            OnDeath();
-        }
-        Debug.Log("HP left: " + CurrentHP.ToString());
+        Debug.Log("BossOne got killed");
+        Destroy(gameObject);
+        GameStateManager.Instance.OnGameStateChanged -= OnGameStateGhanged;
+        // spawn reward
+        Vector3 spawnPoint = transform.position;
+        spawnPoint.y = yRewardSpawnPoint;
+        GameObject reward = Instantiate(rewardPrefab, spawnPoint, Quaternion.identity);
+        reward.SetActive(true);
+        room.EndFight();
     }
 
     private void HitWithThrowback(int damage)
@@ -137,6 +133,10 @@ public class BossOneController : Enemy
         player_controls.ApplyForce(new Vector2(throwback_direction * xThrowbackForce, yThrowbackForce), thowbackDuration);
     }
 
+    public void StartFight()
+    {
+        fightStarted = true;
+    }
     void Start()
     {
         GameStateManager.Instance.OnGameStateChanged += OnGameStateGhanged;
@@ -156,11 +156,14 @@ public class BossOneController : Enemy
         animator.SetBool("JumpDown", false);
         animator.SetBool("Attack", false);
         sinceLastAttackChange = 0f;
+        fightStarted = false;
+        gameObject.SetActive(false);
+        yRewardSpawnPoint = transform.position.y - 0.5f;
     }
 
     void Update()
     {
-        if (able_to_move)
+        if (fightStarted && able_to_move)
         {
             if (sinceLastAttackChange > timeForEachAttack)
             {
