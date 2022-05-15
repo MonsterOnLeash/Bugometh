@@ -119,10 +119,11 @@ public class BossOneController : Enemy
         GameStateManager.Instance.OnGameStateChanged -= OnGameStateGhanged;
         // spawn reward
         Vector3 spawnPoint = transform.position;
-        spawnPoint.y = yRewardSpawnPoint;
+        spawnPoint.y = yRewardSpawnPoint - 0.5f;
         GameObject reward = Instantiate(rewardPrefab, spawnPoint, Quaternion.identity);
         reward.SetActive(true);
-        room.EndFight(transform.position);
+        spawnPoint.y = yRewardSpawnPoint;
+        room.EndFight(spawnPoint);
     }
 
     private void HitWithThrowback(int damage)
@@ -158,7 +159,7 @@ public class BossOneController : Enemy
         sinceLastAttackChange = 0f;
         fightStarted = false;
         gameObject.SetActive(false);
-        yRewardSpawnPoint = transform.position.y - 0.5f;
+        yRewardSpawnPoint = transform.position.y;
     }
 
     void Update()
