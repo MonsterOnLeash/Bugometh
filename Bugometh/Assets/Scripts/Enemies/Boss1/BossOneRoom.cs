@@ -43,7 +43,7 @@ public class BossOneRoom : MonoBehaviour
     }
     private void Start()
     {
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         fightStarted = false;
         string position_str = PlayerPrefs.GetString("BossOneResult", "");
         if (position_str.Length > 0)
