@@ -92131,9 +92131,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2108434376623793408, guid: 4d0045fb6c039184aa3c8a990b8acfa0, type: 3}
   m_PrefabInstance: {fileID: 1057890998}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1730578585 stripped
+--- !u!114 &1730578586 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3110426435994486424, guid: 60e699cffb15d7a4cb44e5d198b5d500, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5888224289152070048, guid: 60e699cffb15d7a4cb44e5d198b5d500, type: 3}
   m_PrefabInstance: {fileID: 3110426436612722177}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -93489,7 +93489,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss1Room
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5888224289152070048, guid: 60e699cffb15d7a4cb44e5d198b5d500, type: 3}
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 102533075}
+    m_RemovedComponents:
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: 60e699cffb15d7a4cb44e5d198b5d500, type: 3}
 --- !u!1001 &3445158135298956736
 PrefabInstance:
@@ -93508,7 +93513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 418223734229628517, guid: 19686034e5c731441a0612ed663bfb51, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.232
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 418223734229628517, guid: 19686034e5c731441a0612ed663bfb51, type: 3}
       propertyPath: m_LocalPosition.z
@@ -93545,7 +93550,7 @@ PrefabInstance:
     - target: {fileID: 3445158135400372759, guid: 19686034e5c731441a0612ed663bfb51, type: 3}
       propertyPath: room
       value: 
-      objectReference: {fileID: 1730578585}
+      objectReference: {fileID: 1730578586}
     - target: {fileID: 4954173472202414683, guid: 19686034e5c731441a0612ed663bfb51, type: 3}
       propertyPath: m_Name
       value: Boss1

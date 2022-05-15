@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Runtime.Serialization;
 
 public class BossOneRoom : MonoBehaviour
 {
     public GameObject boss;
+    public GameObject healedBossPrefab;
     private bool fightStarted;
     public void StartBossFight()
     {
@@ -14,9 +16,12 @@ public class BossOneRoom : MonoBehaviour
         // TODO instantiate walls
     }
 
-    public void EndFight() // called when Boss1 is defeated
+    public void EndFight(Vector3 position) // called when Boss1 is defeated
     {
-        PlayerPrefs.SetFloat("BossOneResult", 1f);
+        position.y -= 1;
+        PlayerPrefs.SetString("BossOneResult", Vector3Serializer.Serialize(position));
+
+        SpawnHealed(position);
         // TODO destroy walls
     }
 
@@ -24,14 +29,27 @@ public class BossOneRoom : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            if (!fightStarted && PlayerPrefs.GetFloat("BossOneResult", 0f) < 0.5)
+            if (!fightStarted && PlayerPrefs.GetString("BossOneResult", "").Length == 0)
             {
                 StartBossFight();
             }
         }
     }
+
+    private void SpawnHealed(Vector3 position)
+    {
+        GameObject healed = Instantiate(healedBossPrefab, position, Quaternion.identity);
+        healed.SetActive(true);
+    }
     private void Start()
     {
+        //PlayerPrefs.DeleteAll();
         fightStarted = false;
+        string position_str = PlayerPrefs.GetString("BossOneResult", "");
+        if (position_str.Length > 0)
+        {
+            Vector3 position = Vector3Serializer.Deserialize(position_str);
+            SpawnHealed(position);
+        }
     }
 }

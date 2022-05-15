@@ -122,7 +122,7 @@ public class BossOneController : Enemy
         spawnPoint.y = yRewardSpawnPoint;
         GameObject reward = Instantiate(rewardPrefab, spawnPoint, Quaternion.identity);
         reward.SetActive(true);
-        room.EndFight();
+        room.EndFight(transform.position);
     }
 
     private void HitWithThrowback(int damage)
