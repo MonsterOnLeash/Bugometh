@@ -251,6 +251,7 @@ MonoBehaviour:
   attackPower: 2
   coyoteTime: 0
   coyoteTimeCounter: 0
+  colorIndex: 0
   rb: {fileID: 0}
   bc: {fileID: 0}
   animator: {fileID: 3898786050736756281}
@@ -258,6 +259,8 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
+  cm: {fileID: 0}
+  is_gameplay: 0
 --- !u!114 &3898786050736756276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,6 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHP: 5
+  CurrentHP: 0
   able_to_move: 0
   speed: 1
 --- !u!1 &3898786051765871395
