@@ -5,10 +5,10 @@ using Cinemachine;
 
 public class SpawnPoint : MonoBehaviour
 {
-    [SerializeField]
+    
     //private GameObject playerPrefab;
     //private GameObject player;
-    private BoxCollider2D bc;
+    
     [SerializeField]
     private CinemachineVirtualCamera cam;
     [SerializeField]
