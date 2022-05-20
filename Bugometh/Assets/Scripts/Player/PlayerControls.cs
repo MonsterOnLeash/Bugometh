@@ -57,7 +57,7 @@ public class PlayerControls : MonoBehaviour
     private bool is_force_applied;
     private Vector2 force_applied;
     private float force_duration;
-    private float actionRequired;
+    private bool actionRequired;
     private float switchColorRequired;
     public List<bool> unlockedColors;
 
@@ -79,7 +79,7 @@ public class PlayerControls : MonoBehaviour
         jumpTimeList = new List<float> { 0, 0, 0 };
         checkRadiusList = new List<float> { 0, 0, 0 };
         unlockedColors = new List<bool> { false, false, false };
-        actionRequired = 0;
+        actionRequired = false;
         facingRight = true;
         isJumping = false;
         LoadSettings();
@@ -123,7 +123,7 @@ public class PlayerControls : MonoBehaviour
 
             //read from input
             jump = playerInput.actions["Jump"].ReadValue<float>();
-            actionRequired = playerInput.actions["Action"].ReadValue<float>();
+            actionRequired = playerInput.actions["Action"].triggered;
 
             //change colors
             if (playerInput.actions["Switch"].triggered)
@@ -287,7 +287,8 @@ public class PlayerControls : MonoBehaviour
 
     public bool ActionRequired()
     {
-        return actionRequired == 1;
+        return actionRequired;
+        
     }
 
     public void SwitchColor()

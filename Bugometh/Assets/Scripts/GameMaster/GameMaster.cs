@@ -22,6 +22,11 @@ public class GameMaster : MonoBehaviour
         dialogueInProgress = true; 
     }
 
+    public static bool OngoingDialogue()
+    {
+        return dialogueInProgress;
+    }
+
     public static void EndDialogue()
     {
         dialogueInProgress = false;

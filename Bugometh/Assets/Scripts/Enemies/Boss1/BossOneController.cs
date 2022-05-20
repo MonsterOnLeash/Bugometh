@@ -149,7 +149,7 @@ public class BossOneController : Enemy
         direction = -1f;
         attackedOnThisHop = false;
         player_obj = GameObject.FindGameObjectWithTag("Player");
-        currentBehaviour = BossOne.BossOneBehaviour.STAY_STILL;
+        currentBehaviour = BossOne.BossOneBehaviour.HOP_SIDEWAYS;
         isBehaviourActionGoingOn = false;
         animator = GetComponent<Animator>();
         animator.SetBool("Walk", false);

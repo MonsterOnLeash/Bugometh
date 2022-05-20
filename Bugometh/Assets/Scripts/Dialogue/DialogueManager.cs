@@ -44,6 +44,9 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        if (GameMaster.OngoingDialogue())
+            return;
+
         ChangeGameState();
         GameMaster.BeginDialogue();
         dialoguePanel.transform.localScale = new Vector3(1, 1, 1);
