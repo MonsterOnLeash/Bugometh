@@ -115,7 +115,6 @@ public class BossOneController : Enemy
     public override void OnDeath()
     {
         Debug.Log("BossOne got killed");
-        Destroy(gameObject);
         GameStateManager.Instance.OnGameStateChanged -= OnGameStateGhanged;
         // spawn reward
         Vector3 spawnPoint = transform.position;
@@ -124,6 +123,7 @@ public class BossOneController : Enemy
         reward.SetActive(true);
         spawnPoint.y = yRewardSpawnPoint;
         room.EndFight(spawnPoint);
+        Destroy(gameObject);
     }
 
     private void HitWithThrowback(int damage)

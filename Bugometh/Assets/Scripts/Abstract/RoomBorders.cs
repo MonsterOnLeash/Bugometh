@@ -9,6 +9,7 @@ public class RoomBorders : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player"))
         {
+            Debug.Log(collision.gameObject);
             Destroy(collision.gameObject);
         }
     }

@@ -26,7 +26,7 @@ public class BossOneRoom : MonoBehaviour
     {
         position.y -= 1;
         PlayerPrefs.SetString("BossOneResult", Vector3Serializer.Serialize(position));
-        for (int i = 0; i < walls.Capacity; i++)
+        for (int i = 0; i < walls.Count; i++)
         {
             Destroy(walls[i]);
         }
