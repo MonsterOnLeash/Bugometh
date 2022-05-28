@@ -35,6 +35,33 @@ TextureImporter:
   - first:
       213: 7003323021924674874
     second: TilesetGround_10
+  - first:
+      213: 1631418333833055514
+    second: TilesetGround_11
+  - first:
+      213: 6363992834132932873
+    second: TilesetGround_12
+  - first:
+      213: 5498146735202730190
+    second: TilesetGround_13
+  - first:
+      213: 4270601432084714031
+    second: TilesetGround_14
+  - first:
+      213: -2489042125001952611
+    second: TilesetGround_15
+  - first:
+      213: -6484364184457452
+    second: TilesetGround_16
+  - first:
+      213: 5267555246776879266
+    second: TilesetGround_17
+  - first:
+      213: -8045600392461896131
+    second: TilesetGround_18
+  - first:
+      213: -4798248807647750071
+    second: TilesetGround_19
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -120,6 +147,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -128,7 +167,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 64
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -149,7 +188,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 32
-        y: 64
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -170,7 +209,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
-        y: 64
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -190,8 +229,8 @@ TextureImporter:
       name: TilesetGround_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 96
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -211,8 +250,8 @@ TextureImporter:
       name: TilesetGround_4
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
+        x: 128
+        y: 96
         width: 32
         height: 32
       alignment: 0
@@ -232,8 +271,8 @@ TextureImporter:
       name: TilesetGround_5
       rect:
         serializedVersion: 2
-        x: 64
-        y: 32
+        x: 0
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -253,8 +292,8 @@ TextureImporter:
       name: TilesetGround_6
       rect:
         serializedVersion: 2
-        x: 96
-        y: 32
+        x: 32
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -274,8 +313,8 @@ TextureImporter:
       name: TilesetGround_7
       rect:
         serializedVersion: 2
-        x: 128
-        y: 32
+        x: 64
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -295,8 +334,8 @@ TextureImporter:
       name: TilesetGround_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 96
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -316,8 +355,8 @@ TextureImporter:
       name: TilesetGround_9
       rect:
         serializedVersion: 2
-        x: 32
-        y: 0
+        x: 128
+        y: 64
         width: 32
         height: 32
       alignment: 0
@@ -337,8 +376,8 @@ TextureImporter:
       name: TilesetGround_10
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
+        x: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
@@ -350,6 +389,195 @@ TextureImporter:
       bones: []
       spriteID: a3da229ee2dc03160800000000000000
       internalID: 7003323021924674874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TilesetGround_11
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1dcd2cb456f3a610800000000000000
+      internalID: 1631418333833055514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TilesetGround_12
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 909ff97c3c1715850800000000000000
+      internalID: 6363992834132932873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TilesetGround_13
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec08bb243575d4c40800000000000000
+      internalID: 5498146735202730190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TilesetGround_14
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f221fa83069344b30800000000000000
+      internalID: 4270601432084714031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TilesetGround_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d927644ff55257dd0800000000000000
+      internalID: -2489042125001952611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TilesetGround_16
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41fe0305186f8eff0800000000000000
+      internalID: -6484364184457452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TilesetGround_17
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a881e6969d1a1940800000000000000
+      internalID: 5267555246776879266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TilesetGround_18
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d36b09a0219485090800000000000000
+      internalID: -8045600392461896131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TilesetGround_19
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 948d634b122396db0800000000000000
+      internalID: -4798248807647750071
       vertices: []
       indices: 
       edges: []

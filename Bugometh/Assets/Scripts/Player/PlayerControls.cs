@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class PlayerControls : MonoBehaviour
 {
@@ -260,6 +261,7 @@ public class PlayerControls : MonoBehaviour
             cm.LoadActiveCamera();
             
         }
+        GameObject.Find("Global Light 2D").GetComponent<Light2D>().intensity = PlayerPrefs.GetFloat("globalIntensity", 0.64f);
         unlockedColors[0] = true;
         extraJumps = PlayerPrefs.GetInt("extraJumps", 0);
         shotEnabled = PlayerPrefs.GetInt("shotEnabled", 0);
@@ -311,6 +313,7 @@ public class PlayerControls : MonoBehaviour
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
             foreach (Collider2D enemy in hitEnemies)
             {
+                Debug.Log(enemy.gameObject);
                 enemy.gameObject.GetComponent<Enemy>().DamageFixed(attackPower);
             }
         }

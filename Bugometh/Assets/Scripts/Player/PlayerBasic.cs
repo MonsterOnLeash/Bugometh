@@ -90,6 +90,7 @@ public class PlayerBasic : LivingThing
     {
         hpBar.IncreaseMaxHealth(health);
         MaxHP += health;
+        SaveSettings();
     }
     //takes both negative and positive values
     public void IncreaseCurrentHP(int health)

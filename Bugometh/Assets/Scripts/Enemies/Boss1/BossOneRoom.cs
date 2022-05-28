@@ -28,10 +28,9 @@ public class BossOneRoom : MonoBehaviour
         PlayerPrefs.SetString("BossOneResult", Vector3Serializer.Serialize(position));
         for (int i = 0; i < walls.Capacity; i++)
         {
-            walls[i].SetActive(false);
+            Destroy(walls[i]);
         }
         SpawnHealed(position);
-        // TODO destroy walls
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
