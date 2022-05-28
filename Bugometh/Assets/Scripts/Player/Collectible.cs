@@ -35,11 +35,14 @@ public class Collectible : MonoBehaviour
             
             for (int i = 0; i < 3; i++)
                 player.GetComponent<PlayerControls>().attackPowerList[i] += damage;
-            
+          
             
             player.GetComponent<PlayerBasic>().IncreaseMaxHP(hp);
             player.GetComponent<PlayerBasic>().IncreaseCurrentHP(hp);
-            
+
+            player.GetComponent<PlayerBasic>().SaveSettings();
+            player.GetComponent<PlayerControls>().SaveSettings();
+
             Destroy(gameObject);
         }
     }
