@@ -28,7 +28,6 @@ public class CameraManager : MonoBehaviour
     
     public void LoadActiveCamera()
     {
-        PlayerPrefs.SetInt("Camera", 10);
         int idx = PlayerPrefs.GetInt("Camera", 0);
         Debug.Log(idx);
         for (int i = 0; i < cameras.Capacity; i++)
